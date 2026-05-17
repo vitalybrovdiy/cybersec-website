@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CYBERSEC | Stay Secure</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+
+  <header>
+    <div class="container nav">
+      <a href="#" class="logo">
+        <div class="logo-icon">🔒</div>
+        <div>
+          <div class="logo-title">CYBERSEC</div>
+          <div class="logo-subtitle">STAY SECURE</div>
+        </div>
+      </a>
+
+      <nav class="menu">
+        <a class="active" href="#" data-uk="ГОЛОВНА" data-en="HOME">ГОЛОВНА</a>
+        <a href="#about" data-uk="ПРО НАС" data-en="ABOUT">ПРО НАС</a>
+        <a href="#services" data-uk="ПОСЛУГИ" data-en="SERVICES">ПОСЛУГИ</a>
+        <a href="#blog" data-uk="БЛОГ" data-en="BLOG">БЛОГ</a>
+        <a href="#resources" data-uk="РЕСУРСИ" data-en="RESOURCES">РЕСУРСИ</a>
+        <a href="#contacts" data-uk="КОНТАКТИ" data-en="CONTACTS">КОНТАКТИ</a>
+      </nav>
+
+      <div class="right-nav">
+        <a href="#login" class="login" data-uk="🔒 ВХІД" data-en="🔒 LOGIN">🔒 ВХІД</a>
+
+        <div class="lang-switch">
+          <button type="button" onclick="setLanguage('uk')" id="btn-uk">UA</button>
+          <button type="button" onclick="setLanguage('en')" id="btn-en">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <div class="eyebrow" data-uk="// КІБЕРБЕЗПЕКА" data-en="// CYBER SECURITY">// КІБЕРБЕЗПЕКА</div>
+
+        <h1
+          data-uk="Захищаємо твоє цифрове майбутнє"
+          data-en="Protecting Your Digital Future">
+          Захищаємо твоє цифрове майбутнє
+        </h1>
+
+        <p
+          class="lead"
+          data-uk="Кібербезпека, тестування на проникнення, аналіз загроз та захист даних для приватних осіб і компаній."
+          data-en="Cybersecurity, penetration testing, threat analysis and data protection for individuals and companies.">
+          Кібербезпека, тестування на проникнення, аналіз загроз та захист даних для приватних осіб і компаній.
+        </p>
+
+        <div class="buttons">
+          <a
+            href="#services"
+            class="btn btn-primary"
+            data-uk="Наші послуги"
+            data-en="Our Services">
+            Наші послуги
+          </a>
+
+          <a
+            href="#about"
+            class="btn"
+            data-uk="Дізнатись більше"
+            data-en="Learn More">
+            Дізнатись більше
+          </a>
+        </div>
+      </div>
+
+      <div class="visual">
+        <div class="globe"></div>
+        <div class="shield-big">
+          <div class="lock">🔒</div>
+        </div>
+
+        <div class="status">
+          <div class="status-title">// SYSTEM STATUS</div>
+          <div class="status-row"><span>FIREWALL</span><span>[ACTIVE]</span></div>
+          <div class="status-row"><span>ENCRYPTION</span><span>[ACTIVE]</span></div>
+          <div class="status-row"><span>NETWORK</span><span>[SECURE]</span></div>
+          <div class="status-row"><span>SSL CERTIFICATE</span><span>[VALID]</span></div>
+          <div class="status-row"><span>DDoS PROTECTION</span><span>[ACTIVE]</span></div>
+          <div class="status-row"><span>DATA INTEGRITY</span><span>[OK]</span></div>
+          <div class="status-footer">SYSTEM: SECURE</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="services">
+      <article class="card service-card">
+        <div class="icon">⌕</div>
+        <div>
+          <h3
+            data-uk="Тестування на проникнення"
+            data-en="Penetration Testing">
+            Тестування на проникнення
+          </h3>
+
+          <p
+            data-uk="Знаходимо вразливості до того, як їх знайдуть хакери."
+            data-en="We find vulnerabilities before hackers find them.">
+            Знаходимо вразливості до того, як їх знайдуть хакери.
+          </p>
+
+          <a href="#" class="more" data-uk="ДЕТАЛЬНІШЕ →" data-en="READ MORE →">ДЕТАЛЬНІШЕ →</a>
+        </div>
+      </article>
+
+      <article class="card service-card">
+        <div class="icon">♜</div>
+        <div>
+          <h3 data-uk="Захист мережі" data-en="Network Protection">Захист мережі</h3>
+
+          <p
+            data-uk="Захищаємо мережі, сервери та інфраструктуру від загроз."
+            data-en="We protect networks, servers and infrastructure from threats.">
+            Захищаємо мережі, сервери та інфраструктуру від загроз.
+          </p>
+
+          <a href="#" class="more" data-uk="ДЕТАЛЬНІШЕ →" data-en="READ MORE →">ДЕТАЛЬНІШЕ →</a>
+        </div>
+      </article>
+
+      <article class="card service-card">
+        <div class="icon">▣</div>
+        <div>
+          <h3 data-uk="Аналіз загроз" data-en="Threat Analysis">Аналіз загроз</h3>
+
+          <p
+            data-uk="Моніторинг та аналіз загроз у реальному часі 24/7."
+            data-en="Monitoring and threat analysis in real time 24/7.">
+            Моніторинг та аналіз загроз у реальному часі 24/7.
+          </p>
+
+          <a href="#" class="more" data-uk="ДЕТАЛЬНІШЕ →" data-en="READ MORE →">ДЕТАЛЬНІШЕ →</a>
+        </div>
+      </article>
+
+      <article class="card service-card">
+        <div class="icon">☷</div>
+        <div>
+          <h3 data-uk="Консультації" data-en="Consulting">Консультації</h3>
+
+          <p
+            data-uk="Допомагаємо бізнесу бути безпечним у цифровому просторі."
+            data-en="We help businesses stay secure in the digital space.">
+            Допомагаємо бізнесу бути безпечним у цифровому просторі.
+          </p>
+
+          <a href="#" class="more" data-uk="ДЕТАЛЬНІШЕ →" data-en="READ MORE →">ДЕТАЛЬНІШЕ →</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="dashboard">
+      <div class="panel news" id="blog">
+        <div class="panel-title" data-uk="// Останні новини" data-en="// Latest News">// Останні новини</div>
+
+        <div class="news-item">
+          <div class="date">25.05.2024</div>
+          <p
+            data-uk="Нова вразливість у Windows: що потрібно знати"
+            data-en="New Windows vulnerability: what you need to know">
+            Нова вразливість у Windows: що потрібно знати
+          </p>
+        </div>
+
+        <div class="news-item">
+          <div class="date">18.05.2024</div>
+          <p
+            data-uk="Як захистити себе від фішингових атак"
+            data-en="How to protect yourself from phishing attacks">
+            Як захистити себе від фішингових атак
+          </p>
+        </div>
+
+        <div class="news-item">
+          <div class="date">10.05.2024</div>
+          <p
+            data-uk="Топ 5 інструментів для тестування на проникнення"
+            data-en="Top 5 tools for penetration testing">
+            Топ 5 інструментів для тестування на проникнення
+          </p>
+        </div>
+
+        <a
+          href="#"
+          class="more"
+          data-uk="ПЕРЕГЛЯНУТИ ВСІ НОВИНИ →"
+          data-en="VIEW ALL NEWS →">
+          ПЕРЕГЛЯНУТИ ВСІ НОВИНИ →
+        </a>
+      </div>
+
+      <div class="panel">
+        <div
+          class="panel-title"
+          data-uk="// Статистика загроз, 24h"
+          data-en="// Threat Statistics, 24h">
+          // Статистика загроз, 24h
+        </div>
+
+        <div class="chart-wrap">
+          <canvas id="threatChart"></canvas>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <strong>12,458</strong>
+            <span data-uk="ЗАБЛОКОВАНО АТАК" data-en="ATTACKS BLOCKED">ЗАБЛОКОВАНО АТАК</span>
+          </div>
+
+          <div class="stat">
+            <strong>2,157</strong>
+            <span data-uk="ПІДОЗРІЛИХ ДІЙ" data-en="SUSPICIOUS ACTIONS">ПІДОЗРІЛИХ ДІЙ</span>
+          </div>
+
+          <div class="stat">
+            <strong>346</strong>
+            <span data-uk="ВРАЗЛИВОСТЕЙ" data-en="VULNERABILITIES">ВРАЗЛИВОСТЕЙ</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel terminal">
+        <div class="panel-title" data-uk="// Термінал" data-en="// Terminal">// Термінал</div>
+        <div id="terminalLines" class="terminal-lines"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div
+        data-uk="© 2024 CYBERSEC. Усі права захищені."
+        data-en="© 2024 CYBERSEC. All rights reserved.">
+        © 2024 CYBERSEC. Усі права захищені.
+      </div>
+
+      <div class="footer-links">
+        <a
+          href="#"
+          data-uk="Політика конфіденційності"
+          data-en="Privacy Policy">
+          Політика конфіденційності
+        </a>
+
+        <a
+          href="#"
+          data-uk="Умови використання"
+          data-en="Terms of Use">
+          Умови використання
+        </a>
+      </div>
+
+      <div class="socials">
+        <span>●</span>
+        <span>▶</span>
+        <span>𝕏</span>
+        <span>in</span>
+        <span>⌘</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
