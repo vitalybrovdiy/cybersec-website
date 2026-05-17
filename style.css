@@ -2,6 +2,9 @@
   --bg: #020402;
   --green: #39ff4a;
   --green-strong: #23cc32;
+  --yellow: #f5ff39;
+  --orange: #ff9f39;
+  --red: #ff395d;
   --green-border: rgba(57, 255, 74, 0.32);
   --green-line: rgba(57, 255, 74, 0.14);
   --text: #f3f5f3;
@@ -83,7 +86,10 @@ textarea {
 .footer-links,
 .socials,
 .contact-line,
-.resource-links {
+.resource-links,
+.tool-topline,
+.language-switcher,
+.password-input-row {
   display: flex;
 }
 
@@ -96,7 +102,10 @@ textarea {
 
 .logo,
 .menu,
-.contact-line {
+.contact-line,
+.tool-topline,
+.language-switcher,
+.password-input-row {
   align-items: center;
 }
 
@@ -174,7 +183,9 @@ textarea {
 
 .login,
 .btn,
-.nav-toggle {
+.nav-toggle,
+.language-switcher button,
+.password-input-row button {
   border: 1px solid var(--green);
   color: var(--green);
   font-weight: 800;
@@ -199,6 +210,32 @@ textarea {
   cursor: pointer;
 }
 
+.tool-topline {
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.language-switcher {
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.language-switcher button,
+.password-input-row button {
+  min-height: 44px;
+  padding: 0 14px;
+  background: rgba(57, 255, 74, 0.04);
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.language-switcher button:hover,
+.language-switcher button.active-lang,
+.password-input-row button:hover {
+  background: rgba(57, 255, 74, 0.16);
+  box-shadow: 0 0 14px rgba(57, 255, 74, 0.4);
+}
+
 .hero,
 .services,
 .dashboard,
@@ -209,7 +246,8 @@ textarea {
 .metric-grid,
 .team-grid,
 .blog-layout,
-.contact-layout {
+.contact-layout,
+.checker-layout {
   display: grid;
 }
 
@@ -648,6 +686,255 @@ p {
   align-items: start;
 }
 
+.checker-layout {
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.checker-panel {
+  min-height: auto;
+}
+
+.password-field {
+  display: grid;
+  gap: 10px;
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.password-input-row {
+  gap: 10px;
+}
+
+.password-input-row input {
+  width: 100%;
+  min-height: 56px;
+  border: 1px solid var(--green-border);
+  background: rgba(0, 0, 0, 0.46);
+  color: var(--text);
+  padding: 0 16px;
+  outline: none;
+}
+
+.password-input-row input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 18px rgba(57, 255, 74, 0.24);
+}
+
+.strength-meter {
+  height: 16px;
+  margin: 22px 0;
+  border: 1px solid var(--green-border);
+  background: rgba(0, 0, 0, 0.48);
+  overflow: hidden;
+}
+
+.strength-bar {
+  width: 0;
+  height: 100%;
+  background: var(--red);
+  transition: width 0.35s ease, background 0.35s ease;
+}
+
+.checker-readout {
+  display: grid;
+  gap: 18px;
+}
+
+.result-chip {
+  width: fit-content;
+  border: 1px solid currentColor;
+  padding: 10px 14px;
+  color: var(--red);
+  font-weight: 800;
+  text-transform: uppercase;
+  box-shadow: 0 0 18px rgba(255, 57, 93, 0.2);
+}
+
+.result-chip.weak {
+  color: var(--orange);
+}
+
+.result-chip.medium {
+  color: var(--yellow);
+}
+
+.result-chip.strong,
+.result-chip.very-strong {
+  color: var(--green);
+}
+
+.readout-grid,
+.criteria-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.readout-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.readout-grid div,
+.criterion {
+  border: 1px solid rgba(57, 255, 74, 0.2);
+  background: rgba(57, 255, 74, 0.04);
+  padding: 14px;
+}
+
+.readout-grid span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.readout-grid strong {
+  color: var(--green);
+  font-size: 20px;
+}
+
+.recommendation-list {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 18px;
+  list-style: none;
+}
+
+.recommendation-list li {
+  border-left: 2px solid var(--green);
+  background: rgba(57, 255, 74, 0.05);
+  color: var(--muted);
+  padding: 10px 12px;
+}
+
+.criteria-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.criterion {
+  opacity: 0.58;
+  transition: opacity 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.criterion span {
+  display: block;
+  color: var(--green);
+  font-weight: 800;
+}
+
+.criterion p {
+  font-size: 12px;
+}
+
+.criterion.pass {
+  opacity: 1;
+  border-color: var(--green);
+  box-shadow: 0 0 16px rgba(57, 255, 74, 0.16);
+}
+
+.dashboard-metrics .stat {
+  min-height: 120px;
+  display: grid;
+  place-content: center;
+}
+
+.future-tools-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.future-tool-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.future-tool-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -30% -45% -30%;
+  height: 90px;
+  background: linear-gradient(90deg, transparent, rgba(57, 255, 74, 0.16), transparent);
+  transform: rotate(-6deg);
+  transition: transform 0.35s ease;
+}
+
+.future-tool-card:hover::after {
+  transform: translateY(-24px) rotate(-6deg);
+}
+
+.status-badge {
+  display: inline-block;
+  margin-bottom: 16px;
+  border: 1px solid var(--green-border);
+  padding: 6px 10px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.notify-btn {
+  min-width: 0;
+  min-height: 42px;
+  margin-top: 18px;
+  padding: 0 16px;
+}
+
+.scan-history {
+  margin-top: 34px;
+}
+
+.history-table {
+  display: grid;
+  gap: 8px;
+}
+
+.history-row {
+  display: grid;
+  grid-template-columns: 1.6fr 0.7fr 0.6fr 0.6fr;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid rgba(57, 255, 74, 0.16);
+  background: rgba(0, 0, 0, 0.24);
+  padding: 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.history-head {
+  color: var(--green);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.risk-low {
+  color: var(--green);
+}
+
+.risk-medium {
+  color: var(--yellow);
+}
+
+.risk-high {
+  color: var(--red);
+}
+
+.status-badge.done {
+  border-color: var(--green);
+}
+
+.status-badge.review {
+  border-color: var(--yellow);
+  color: var(--yellow);
+}
+
+.status-badge.alert {
+  border-color: var(--red);
+  color: var(--red);
+}
+
 .contact-form {
   display: grid;
   gap: 16px;
@@ -814,7 +1101,8 @@ footer {
   .hero,
   .dashboard,
   .blog-layout,
-  .contact-layout {
+  .contact-layout,
+  .checker-layout {
     grid-template-columns: 1fr;
   }
 
@@ -824,7 +1112,8 @@ footer {
 
   .cards-grid,
   .team-grid,
-  .compact-grid {
+  .compact-grid,
+  .future-tools-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -859,7 +1148,24 @@ footer {
   .split-section,
   .team-grid,
   .cards-grid,
-  .compact-grid {
+  .compact-grid,
+  .future-tools-grid,
+  .readout-grid,
+  .criteria-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-topline,
+  .password-input-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .language-switcher {
+    flex-wrap: wrap;
+  }
+
+  .history-row {
     grid-template-columns: 1fr;
   }
 
