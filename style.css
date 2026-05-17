@@ -453,11 +453,13 @@ p {
   font-weight: 800;
 }
 
-.services,
-.cards-grid {
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin: 14px 0 20px;
+.services {
+  width: min(100%, 1400px);
+  grid-template-columns: repeat(4, minmax(240px, 1fr));
+  justify-content: center;
+  align-items: stretch;
+  gap: 24px;
+  margin: 24px auto;
 }
 
 .cards-grid {
@@ -513,6 +515,7 @@ p {
 }
 
 .service-card {
+  width: 100%;
   grid-template-columns: 72px 1fr;
   align-items: start;
   gap: 22px;
@@ -1564,7 +1567,8 @@ footer {
   }
 
   .services {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    justify-content: center;
   }
 
   .cards-grid,
@@ -1638,6 +1642,12 @@ footer {
 
   .history-row {
     grid-template-columns: 1fr;
+  }
+
+  .services {
+    width: min(100%, 420px);
+    margin-right: auto;
+    margin-left: auto;
   }
 
   .visual {
