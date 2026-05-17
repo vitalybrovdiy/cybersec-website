@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CYBERSEC live AI scanner dashboard.">
+  <title>CYBERSEC | Scanner</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="scanner">
+  <canvas id="matrix"></canvas>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="logo" aria-label="CYBERSEC home">
+        <div class="logo-icon">🔒</div>
+        <div>
+          <div class="logo-title">CYBERSEC</div>
+          <div class="logo-subtitle">STAY SECURE</div>
+        </div>
+      </a>
+
+      <nav class="menu" aria-label="Primary navigation">
+        <a href="index.html" data-page-link="home">ГОЛОВНА</a>
+        <a href="about.html" data-page-link="about">ПРО НАС</a>
+        <a href="services.html" data-page-link="services">ПОСЛУГИ</a>
+        <a href="blog.html" data-page-link="blog">БЛОГ</a>
+        <a href="resources.html" data-page-link="resources">РЕСУРСИ</a>
+        <a href="password-checker.html" data-page-link="password-checker">PASSWORD CHECKER</a>
+        <a href="contacts.html" data-page-link="contacts">КОНТАКТИ</a>
+      </nav>
+
+      <div class="language-switcher" aria-label="Language switcher">
+        <button type="button" data-lang="uk">UA</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="de">DE</button>
+      </div>
+
+      <a href="contacts.html" class="login">🔒 ЗВ'ЯЗАТИСЬ</a>
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main class="container page">
+    <section class="page-hero reveal">
+      <div class="eyebrow" data-uk="// LIVE SCANNER" data-en="// LIVE SCANNER" data-de="// LIVE-SCANNER">// LIVE SCANNER</div>
+      <h1 data-uk="Сканер підозрілих URL у реальному часі" data-en="Real-time suspicious URL scanner" data-de="Echtzeit-Scanner für verdächtige URLs">Сканер підозрілих URL у реальному часі</h1>
+      <p class="lead" data-uk="Демо-інтерфейс показує AI аналіз, live feed, ризики та історію сканувань." data-en="This demo interface shows AI analysis, live feed, risks and scan history." data-de="Dieses Demo-Interface zeigt KI-Analyse, Live-Feed, Risiken und Scanverlauf.">Демо-інтерфейс показує AI аналіз, live feed, ризики та історію сканувань.</p>
+    </section>
+
+    <section class="scanner-console reveal" aria-label="Live cybersecurity scanner">
+      <div class="scanner-main panel">
+        <div class="panel-title">// AI Threat Scanner</div>
+        <div class="scan-box">
+          <div class="scan-grid"></div>
+          <div class="scan-beam"></div>
+          <div class="radar-core">
+            <div class="radar-ring"></div>
+            <div class="radar-ring"></div>
+            <div class="radar-sweep"></div>
+            <div class="radar-dot dot-a"></div>
+            <div class="radar-dot dot-b"></div>
+            <div class="radar-dot dot-c"></div>
+          </div>
+          <div class="scan-target">
+            <span id="scanTarget">secure-client.app</span>
+            <strong id="scanStatus">SAFE</strong>
+          </div>
+        </div>
+
+        <div class="scan-progress">
+          <div id="homeScanProgress" class="scan-progress-bar"></div>
+        </div>
+        <div id="aiAnalysis" class="ai-analysis">AI model initializing scan pipeline...</div>
+
+        <div class="detection-labels">
+          <span class="detect-safe">SAFE</span>
+          <span class="detect-suspicious">SUSPICIOUS</span>
+          <span class="detect-dangerous">DANGEROUS</span>
+        </div>
+      </div>
+
+      <aside class="live-side">
+        <div class="panel cyber-globe-panel">
+          <div class="panel-title">// Global Traffic</div>
+          <div class="cyber-globe">
+            <span class="node node-1"></span>
+            <span class="node node-2"></span>
+            <span class="node node-3"></span>
+            <span class="node node-4"></span>
+            <span class="network-line line-1"></span>
+            <span class="network-line line-2"></span>
+            <span class="network-line line-3"></span>
+          </div>
+        </div>
+        <div class="panel threat-feed-panel">
+          <div class="panel-title">// Live Threat Feed</div>
+          <div id="threatFeed" class="threat-feed"></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="panel live-history reveal">
+      <div class="panel-title">// Live Scan History</div>
+      <div id="homeScanHistory" class="history-table compact-history"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2026 CYBERSEC. Усі права захищені.</div>
+      <div class="footer-links">
+        <a href="resources.html">Privacy Policy</a>
+        <a href="resources.html">Terms of Use</a>
+      </div>
+      <div class="socials">
+        <a href="contacts.html">GitHub</a>
+        <a href="contacts.html">LinkedIn</a>
+        <a href="contacts.html">X</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

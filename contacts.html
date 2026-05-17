@@ -32,6 +32,11 @@
         <a href="password-checker.html" data-page-link="password-checker">PASSWORD CHECKER</a>
         <a href="contacts.html" data-page-link="contacts">КОНТАКТИ</a>
       </nav>
+      <div class="language-switcher" aria-label="Language switcher">
+        <button type="button" data-lang="uk">UA</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="de">DE</button>
+      </div>
       <a href="contacts.html" class="login">🔒 ЗВ'ЯЗАТИСЬ</a>
       <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
     </div>
@@ -48,15 +53,15 @@
       <form class="panel contact-form reveal">
         <div class="panel-title">// Secure Contact Form</div>
         <label>
-          Ім'я
+          <span data-uk="Ім'я" data-en="Name" data-de="Name">Ім'я</span>
           <input type="text" name="name" placeholder="Ваше ім'я" required>
         </label>
         <label>
-          Email
+          <span data-uk="Email" data-en="Email" data-de="E-Mail">Email</span>
           <input type="email" name="email" placeholder="security@company.com" required>
         </label>
         <label>
-          Запит
+          <span data-uk="Запит" data-en="Request" data-de="Anfrage">Запит</span>
           <select name="service" required>
             <option value="">Оберіть напрям</option>
             <option>Penetration Testing</option>
@@ -67,7 +72,7 @@
           </select>
         </label>
         <label>
-          Повідомлення
+          <span data-uk="Повідомлення" data-en="Message" data-de="Nachricht">Повідомлення</span>
           <textarea name="message" rows="6" placeholder="Коротко опишіть інфраструктуру, дедлайн і очікування"></textarea>
         </label>
         <button type="submit" class="btn btn-primary">Надіслати</button>

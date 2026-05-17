@@ -36,6 +36,12 @@
         <a href="contacts.html" data-page-link="contacts">КОНТАКТИ</a>
       </nav>
 
+      <div class="language-switcher" aria-label="Language switcher">
+        <button type="button" data-lang="uk">UA</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="de">DE</button>
+      </div>
+
       <a href="contacts.html" class="login">🔒 ЗВ'ЯЗАТИСЬ</a>
       <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
     </div>
@@ -70,6 +76,83 @@
           <div class="status-footer">SYSTEM: SECURE</div>
         </div>
       </div>
+    </section>
+
+    <section class="scanner-console container reveal" aria-label="Live cybersecurity scanner">
+      <div class="scanner-main panel">
+        <div class="panel-title">// AI Threat Scanner</div>
+        <div class="scan-box">
+          <div class="scan-grid"></div>
+          <div class="scan-beam"></div>
+          <div class="radar-core">
+            <div class="radar-ring"></div>
+            <div class="radar-ring"></div>
+            <div class="radar-sweep"></div>
+            <div class="radar-dot dot-a"></div>
+            <div class="radar-dot dot-b"></div>
+            <div class="radar-dot dot-c"></div>
+          </div>
+          <div class="scan-target">
+            <span id="scanTarget">secure-client.app</span>
+            <strong id="scanStatus">SAFE</strong>
+          </div>
+        </div>
+
+        <div class="scan-progress">
+          <div id="homeScanProgress" class="scan-progress-bar"></div>
+        </div>
+        <div id="aiAnalysis" class="ai-analysis">AI model initializing scan pipeline...</div>
+
+        <div class="detection-labels">
+          <span class="detect-safe">SAFE</span>
+          <span class="detect-suspicious">SUSPICIOUS</span>
+          <span class="detect-dangerous">DANGEROUS</span>
+        </div>
+      </div>
+
+      <aside class="live-side">
+        <div class="panel cyber-globe-panel">
+          <div class="panel-title">// Global Traffic</div>
+          <div class="cyber-globe">
+            <span class="node node-1"></span>
+            <span class="node node-2"></span>
+            <span class="node node-3"></span>
+            <span class="node node-4"></span>
+            <span class="network-line line-1"></span>
+            <span class="network-line line-2"></span>
+            <span class="network-line line-3"></span>
+          </div>
+        </div>
+
+        <div class="panel threat-feed-panel">
+          <div class="panel-title">// Live Threat Feed</div>
+          <div id="threatFeed" class="threat-feed"></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="metric-grid live-metrics container">
+      <div class="stat reveal">
+        <strong data-counter data-target="184">0</strong>
+        <span>Today's Scans</span>
+      </div>
+      <div class="stat reveal">
+        <strong data-counter data-target="12458">0</strong>
+        <span>Threats Blocked</span>
+      </div>
+      <div class="stat reveal">
+        <strong data-counter data-target="37">0</strong>
+        <span>Average Risk</span>
+      </div>
+      <div class="stat reveal">
+        <strong data-counter data-target="8412">0</strong>
+        <span>Protected Users</span>
+      </div>
+    </section>
+
+    <section class="panel live-history container reveal">
+      <div class="panel-title">// Live Scan History</div>
+      <div id="homeScanHistory" class="history-table compact-history"></div>
     </section>
 
     <section class="services container">
