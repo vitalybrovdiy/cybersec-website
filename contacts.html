@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact CYBERSEC for cybersecurity audits, consulting and SOC monitoring.">
+  <title>CYBERSEC | Контакти</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="contacts">
+  <canvas id="matrix"></canvas>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="logo" aria-label="CYBERSEC home">
+        <div class="logo-icon">🔒</div>
+        <div>
+          <div class="logo-title">CYBERSEC</div>
+          <div class="logo-subtitle">STAY SECURE</div>
+        </div>
+      </a>
+      <nav class="menu" aria-label="Primary navigation">
+        <a href="index.html" data-page-link="home">ГОЛОВНА</a>
+        <a href="about.html" data-page-link="about">ПРО НАС</a>
+        <a href="services.html" data-page-link="services">ПОСЛУГИ</a>
+        <a href="blog.html" data-page-link="blog">БЛОГ</a>
+        <a href="resources.html" data-page-link="resources">РЕСУРСИ</a>
+        <a href="contacts.html" data-page-link="contacts">КОНТАКТИ</a>
+      </nav>
+      <a href="contacts.html" class="login">🔒 ЗВ'ЯЗАТИСЬ</a>
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main class="container page">
+    <section class="page-hero reveal">
+      <div class="eyebrow">// КОНТАКТИ</div>
+      <h1>Розкажи, що потрібно захистити</h1>
+      <p class="lead">Опиши задачу, а ми повернемось з коротким планом assessment, ризиками й наступними кроками.</p>
+    </section>
+
+    <section class="contact-layout">
+      <form class="panel contact-form reveal">
+        <div class="panel-title">// Secure Contact Form</div>
+        <label>
+          Ім'я
+          <input type="text" name="name" placeholder="Ваше ім'я" required>
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" placeholder="security@company.com" required>
+        </label>
+        <label>
+          Запит
+          <select name="service" required>
+            <option value="">Оберіть напрям</option>
+            <option>Penetration Testing</option>
+            <option>Network Protection</option>
+            <option>Cloud Security</option>
+            <option>SOC Monitoring</option>
+            <option>Security Consulting</option>
+          </select>
+        </label>
+        <label>
+          Повідомлення
+          <textarea name="message" rows="6" placeholder="Коротко опишіть інфраструктуру, дедлайн і очікування"></textarea>
+        </label>
+        <button type="submit" class="btn btn-primary">Надіслати</button>
+        <p class="form-status" aria-live="polite"></p>
+      </form>
+
+      <aside class="contact-stack">
+        <div class="panel reveal">
+          <div class="panel-title">// Direct Channels</div>
+          <div class="contact-line"><span>Email</span><a href="mailto:security@cybersec.example">security@cybersec.example</a></div>
+          <div class="contact-line"><span>Phone</span><a href="tel:+380441234567">+380 44 123 45 67</a></div>
+          <div class="contact-line"><span>Address</span><p>Kyiv, Ukraine · Remote-first security team</p></div>
+        </div>
+
+        <div class="panel reveal">
+          <div class="panel-title">// Social Links</div>
+          <div class="resource-links">
+            <a href="#">GitHub</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">X / Twitter</a>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="map-section reveal">
+      <div class="panel-title">// Google Map</div>
+      <iframe
+        title="CYBERSEC Kyiv map"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps?q=Kyiv%2C%20Ukraine&output=embed"></iframe>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2026 CYBERSEC. Усі права захищені.</div>
+      <div class="footer-links">
+        <a href="resources.html">Privacy Policy</a>
+        <a href="resources.html">Terms of Use</a>
+      </div>
+      <div class="socials">
+        <a href="contacts.html">GitHub</a>
+        <a href="contacts.html">LinkedIn</a>
+        <a href="contacts.html">X</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CYBERSEC | Stay Secure</title>
+  <meta name="description" content="CYBERSEC - cybersecurity, penetration testing, threat analysis and data protection.">
+  <title>CYBERSEC | Головна</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,12 +13,12 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="home">
   <canvas id="matrix"></canvas>
 
-  <header>
+  <header class="site-header">
     <div class="container nav">
-      <a href="#" class="logo">
+      <a href="index.html" class="logo" aria-label="CYBERSEC home">
         <div class="logo-icon">🔒</div>
         <div>
           <div class="logo-title">CYBERSEC</div>
@@ -25,64 +26,34 @@
         </div>
       </a>
 
-      <nav class="menu">
-        <a class="active" href="#" data-uk="ГОЛОВНА" data-en="HOME">ГОЛОВНА</a>
-        <a href="#about" data-uk="ПРО НАС" data-en="ABOUT">ПРО НАС</a>
-        <a href="#services" data-uk="ПОСЛУГИ" data-en="SERVICES">ПОСЛУГИ</a>
-        <a href="#blog" data-uk="БЛОГ" data-en="BLOG">БЛОГ</a>
-        <a href="#resources" data-uk="РЕСУРСИ" data-en="RESOURCES">РЕСУРСИ</a>
-        <a href="#contacts" data-uk="КОНТАКТИ" data-en="CONTACTS">КОНТАКТИ</a>
+      <nav class="menu" aria-label="Primary navigation">
+        <a href="index.html" data-page-link="home">ГОЛОВНА</a>
+        <a href="about.html" data-page-link="about">ПРО НАС</a>
+        <a href="services.html" data-page-link="services">ПОСЛУГИ</a>
+        <a href="blog.html" data-page-link="blog">БЛОГ</a>
+        <a href="resources.html" data-page-link="resources">РЕСУРСИ</a>
+        <a href="contacts.html" data-page-link="contacts">КОНТАКТИ</a>
       </nav>
 
-      <div class="right-nav">
-        <a href="#login" class="login" data-uk="🔒 ВХІД" data-en="🔒 LOGIN">🔒 ВХІД</a>
-
-        <div class="lang-switch">
-          <button type="button" onclick="setLanguage('uk')" id="btn-uk">UA</button>
-          <button type="button" onclick="setLanguage('en')" id="btn-en">EN</button>
-        </div>
-      </div>
+      <a href="contacts.html" class="login">🔒 ЗВ'ЯЗАТИСЬ</a>
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
     </div>
   </header>
 
-  <main class="container">
-    <section class="hero">
-      <div>
-        <div class="eyebrow" data-uk="// КІБЕРБЕЗПЕКА" data-en="// CYBER SECURITY">// КІБЕРБЕЗПЕКА</div>
-
-        <h1
-          data-uk="Захищаємо твоє цифрове майбутнє"
-          data-en="Protecting Your Digital Future">
-          Захищаємо твоє цифрове майбутнє
-        </h1>
-
-        <p
-          class="lead"
-          data-uk="Кібербезпека, тестування на проникнення, аналіз загроз та захист даних для приватних осіб і компаній."
-          data-en="Cybersecurity, penetration testing, threat analysis and data protection for individuals and companies.">
-          Кібербезпека, тестування на проникнення, аналіз загроз та захист даних для приватних осіб і компаній.
-        </p>
+  <main>
+    <section class="hero container">
+      <div class="reveal">
+        <div class="eyebrow">// КІБЕРБЕЗПЕКА</div>
+        <h1>Захищаємо твоє цифрове майбутнє</h1>
+        <p class="lead">Cybersecurity, penetration testing, threat analysis and data protection for companies that cannot afford silence after an attack.</p>
 
         <div class="buttons">
-          <a
-            href="#services"
-            class="btn btn-primary"
-            data-uk="Наші послуги"
-            data-en="Our Services">
-            Наші послуги
-          </a>
-
-          <a
-            href="#about"
-            class="btn"
-            data-uk="Дізнатись більше"
-            data-en="Learn More">
-            Дізнатись більше
-          </a>
+          <a href="services.html" class="btn btn-primary">Наші послуги</a>
+          <a href="about.html" class="btn">Дізнатись більше</a>
         </div>
       </div>
 
-      <div class="visual">
+      <div class="visual reveal">
         <div class="globe"></div>
         <div class="shield-big">
           <div class="lock">🔒</div>
@@ -95,126 +66,69 @@
           <div class="status-row"><span>NETWORK</span><span>[SECURE]</span></div>
           <div class="status-row"><span>SSL CERTIFICATE</span><span>[VALID]</span></div>
           <div class="status-row"><span>DDoS PROTECTION</span><span>[ACTIVE]</span></div>
-          <div class="status-row"><span>DATA INTEGRITY</span><span>[OK]</span></div>
           <div class="status-footer">SYSTEM: SECURE</div>
         </div>
       </div>
     </section>
 
-    <section id="services" class="services">
-      <article class="card service-card">
+    <section class="services container">
+      <article class="card service-card reveal">
         <div class="icon">⌕</div>
         <div>
-          <h3
-            data-uk="Тестування на проникнення"
-            data-en="Penetration Testing">
-            Тестування на проникнення
-          </h3>
-
-          <p
-            data-uk="Знаходимо вразливості до того, як їх знайдуть хакери."
-            data-en="We find vulnerabilities before hackers find them.">
-            Знаходимо вразливості до того, як їх знайдуть хакери.
-          </p>
-
-          <a href="#" class="more" data-uk="ДЕТАЛЬНІШЕ →" data-en="READ MORE →">ДЕТАЛЬНІШЕ →</a>
+          <h3>Penetration Testing</h3>
+          <p>Знаходимо критичні вразливості до того, як ними скористаються атакувальники.</p>
+          <a href="services.html" class="more">READ MORE →</a>
         </div>
       </article>
 
-      <article class="card service-card">
+      <article class="card service-card reveal">
         <div class="icon">♜</div>
         <div>
-          <h3 data-uk="Захист мережі" data-en="Network Protection">Захист мережі</h3>
-
-          <p
-            data-uk="Захищаємо мережі, сервери та інфраструктуру від загроз."
-            data-en="We protect networks, servers and infrastructure from threats.">
-            Захищаємо мережі, сервери та інфраструктуру від загроз.
-          </p>
-
-          <a href="#" class="more" data-uk="ДЕТАЛЬНІШЕ →" data-en="READ MORE →">ДЕТАЛЬНІШЕ →</a>
+          <h3>Network Protection</h3>
+          <p>Захищаємо мережі, сервери та інфраструктуру від реальних кіберзагроз.</p>
+          <a href="services.html" class="more">READ MORE →</a>
         </div>
       </article>
 
-      <article class="card service-card">
+      <article class="card service-card reveal">
         <div class="icon">▣</div>
         <div>
-          <h3 data-uk="Аналіз загроз" data-en="Threat Analysis">Аналіз загроз</h3>
-
-          <p
-            data-uk="Моніторинг та аналіз загроз у реальному часі 24/7."
-            data-en="Monitoring and threat analysis in real time 24/7.">
-            Моніторинг та аналіз загроз у реальному часі 24/7.
-          </p>
-
-          <a href="#" class="more" data-uk="ДЕТАЛЬНІШЕ →" data-en="READ MORE →">ДЕТАЛЬНІШЕ →</a>
+          <h3>Threat Analysis</h3>
+          <p>Моніторимо, аналізуємо й пріоритезуємо ризики у режимі 24/7.</p>
+          <a href="services.html" class="more">READ MORE →</a>
         </div>
       </article>
 
-      <article class="card service-card">
+      <article class="card service-card reveal">
         <div class="icon">☷</div>
         <div>
-          <h3 data-uk="Консультації" data-en="Consulting">Консультації</h3>
-
-          <p
-            data-uk="Допомагаємо бізнесу бути безпечним у цифровому просторі."
-            data-en="We help businesses stay secure in the digital space.">
-            Допомагаємо бізнесу бути безпечним у цифровому просторі.
-          </p>
-
-          <a href="#" class="more" data-uk="ДЕТАЛЬНІШЕ →" data-en="READ MORE →">ДЕТАЛЬНІШЕ →</a>
+          <h3>Security Consulting</h3>
+          <p>Будуємо зрозумілу cyber strategy для бізнесу, команд і продуктів.</p>
+          <a href="services.html" class="more">READ MORE →</a>
         </div>
       </article>
     </section>
 
-    <section class="dashboard">
-      <div class="panel news" id="blog">
-        <div class="panel-title" data-uk="// Останні новини" data-en="// Latest News">// Останні новини</div>
-
+    <section class="dashboard container">
+      <div class="panel news reveal">
+        <div class="panel-title">// Останні новини</div>
         <div class="news-item">
-          <div class="date">25.05.2024</div>
-          <p
-            data-uk="Нова вразливість у Windows: що потрібно знати"
-            data-en="New Windows vulnerability: what you need to know">
-            Нова вразливість у Windows: що потрібно знати
-          </p>
+          <div class="date">25.05.2026</div>
+          <p>Zero Trust у 2026: як перебудувати доступ без хаосу для команди.</p>
         </div>
-
         <div class="news-item">
-          <div class="date">18.05.2024</div>
-          <p
-            data-uk="Як захистити себе від фішингових атак"
-            data-en="How to protect yourself from phishing attacks">
-            Як захистити себе від фішингових атак
-          </p>
+          <div class="date">18.05.2026</div>
+          <p>Фішинг нового покоління: deepfake voice, QR пастки та AI листи.</p>
         </div>
-
         <div class="news-item">
-          <div class="date">10.05.2024</div>
-          <p
-            data-uk="Топ 5 інструментів для тестування на проникнення"
-            data-en="Top 5 tools for penetration testing">
-            Топ 5 інструментів для тестування на проникнення
-          </p>
+          <div class="date">10.05.2026</div>
+          <p>Top 5 інструментів для первинного security audit.</p>
         </div>
-
-        <a
-          href="#"
-          class="more"
-          data-uk="ПЕРЕГЛЯНУТИ ВСІ НОВИНИ →"
-          data-en="VIEW ALL NEWS →">
-          ПЕРЕГЛЯНУТИ ВСІ НОВИНИ →
-        </a>
+        <a href="blog.html" class="more">VIEW ALL NEWS →</a>
       </div>
 
-      <div class="panel">
-        <div
-          class="panel-title"
-          data-uk="// Статистика загроз, 24h"
-          data-en="// Threat Statistics, 24h">
-          // Статистика загроз, 24h
-        </div>
-
+      <div class="panel reveal">
+        <div class="panel-title">// Threat Statistics, 24h</div>
         <div class="chart-wrap">
           <canvas id="threatChart"></canvas>
         </div>
@@ -222,23 +136,21 @@
         <div class="stats">
           <div class="stat">
             <strong>12,458</strong>
-            <span data-uk="ЗАБЛОКОВАНО АТАК" data-en="ATTACKS BLOCKED">ЗАБЛОКОВАНО АТАК</span>
+            <span>ATTACKS BLOCKED</span>
           </div>
-
           <div class="stat">
             <strong>2,157</strong>
-            <span data-uk="ПІДОЗРІЛИХ ДІЙ" data-en="SUSPICIOUS ACTIONS">ПІДОЗРІЛИХ ДІЙ</span>
+            <span>SUSPICIOUS ACTIONS</span>
           </div>
-
           <div class="stat">
             <strong>346</strong>
-            <span data-uk="ВРАЗЛИВОСТЕЙ" data-en="VULNERABILITIES">ВРАЗЛИВОСТЕЙ</span>
+            <span>VULNERABILITIES</span>
           </div>
         </div>
       </div>
 
-      <div class="panel terminal">
-        <div class="panel-title" data-uk="// Термінал" data-en="// Terminal">// Термінал</div>
+      <div class="panel terminal reveal">
+        <div class="panel-title">// Terminal</div>
         <div id="terminalLines" class="terminal-lines"></div>
       </div>
     </section>
@@ -246,34 +158,15 @@
 
   <footer>
     <div class="container footer-inner">
-      <div
-        data-uk="© 2024 CYBERSEC. Усі права захищені."
-        data-en="© 2024 CYBERSEC. All rights reserved.">
-        © 2024 CYBERSEC. Усі права захищені.
-      </div>
-
+      <div>© 2026 CYBERSEC. Усі права захищені.</div>
       <div class="footer-links">
-        <a
-          href="#"
-          data-uk="Політика конфіденційності"
-          data-en="Privacy Policy">
-          Політика конфіденційності
-        </a>
-
-        <a
-          href="#"
-          data-uk="Умови використання"
-          data-en="Terms of Use">
-          Умови використання
-        </a>
+        <a href="resources.html">Privacy Policy</a>
+        <a href="resources.html">Terms of Use</a>
       </div>
-
       <div class="socials">
-        <span>●</span>
-        <span>▶</span>
-        <span>𝕏</span>
-        <span>in</span>
-        <span>⌘</span>
+        <a href="contacts.html">GitHub</a>
+        <a href="contacts.html">LinkedIn</a>
+        <a href="contacts.html">X</a>
       </div>
     </div>
   </footer>

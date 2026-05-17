@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CYBERSEC blog with cybersecurity articles, news and practical defense notes.">
+  <title>CYBERSEC | Блог</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="blog">
+  <canvas id="matrix"></canvas>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="logo" aria-label="CYBERSEC home">
+        <div class="logo-icon">🔒</div>
+        <div>
+          <div class="logo-title">CYBERSEC</div>
+          <div class="logo-subtitle">STAY SECURE</div>
+        </div>
+      </a>
+      <nav class="menu" aria-label="Primary navigation">
+        <a href="index.html" data-page-link="home">ГОЛОВНА</a>
+        <a href="about.html" data-page-link="about">ПРО НАС</a>
+        <a href="services.html" data-page-link="services">ПОСЛУГИ</a>
+        <a href="blog.html" data-page-link="blog">БЛОГ</a>
+        <a href="resources.html" data-page-link="resources">РЕСУРСИ</a>
+        <a href="contacts.html" data-page-link="contacts">КОНТАКТИ</a>
+      </nav>
+      <a href="contacts.html" class="login">🔒 ЗВ'ЯЗАТИСЬ</a>
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main class="container page">
+    <section class="page-hero reveal">
+      <div class="eyebrow">// БЛОГ</div>
+      <h1>Cyber security articles, briefings, field notes</h1>
+      <p class="lead">Практичні матеріали про атаки, захист, інструменти й рішення для команд, які працюють з ризиком щодня.</p>
+    </section>
+
+    <section class="blog-layout">
+      <article class="card article-card featured-article reveal">
+        <div class="date">17.05.2026</div>
+        <h2>AI-powered phishing: як перевірити readiness команди</h2>
+        <p>Deepfake voice, персоналізовані листи та автоматизована social engineering кампанія змінюють правила defense training.</p>
+        <a href="#" class="more">READ MORE →</a>
+      </article>
+
+      <div class="article-list">
+        <article class="card article-card reveal">
+          <div class="date">12.05.2026</div>
+          <h3>Zero Trust без зайвої бюрократії</h3>
+          <p>Як почати з identity, segmentation і least privilege без паралічу бізнес-процесів.</p>
+          <a href="#" class="more">READ MORE →</a>
+        </article>
+        <article class="card article-card reveal">
+          <div class="date">04.05.2026</div>
+          <h3>Що має бути в incident response playbook</h3>
+          <p>Ролі, escalation, forensic collection, комунікація і recovery checklist для перших 60 хвилин.</p>
+          <a href="#" class="more">READ MORE →</a>
+        </article>
+        <article class="card article-card reveal">
+          <div class="date">28.04.2026</div>
+          <h3>Cloud misconfigurations: 7 частих помилок</h3>
+          <p>Public buckets, weak IAM, exposed dashboards і secrets у build logs.</p>
+          <a href="#" class="more">READ MORE →</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="cards-grid compact-grid">
+      <article class="card article-card reveal">
+        <div class="date">20.04.2026</div>
+        <h3>SIEM tuning basics</h3>
+        <p>Менше шуму, більше сигналів: як оцінювати alert quality.</p>
+        <a href="#" class="more">READ MORE →</a>
+      </article>
+      <article class="card article-card reveal">
+        <div class="date">14.04.2026</div>
+        <h3>Security awareness that works</h3>
+        <p>Мікронавчання, реальні сценарії та повторювані вправи.</p>
+        <a href="#" class="more">READ MORE →</a>
+      </article>
+      <article class="card article-card reveal">
+        <div class="date">08.04.2026</div>
+        <h3>Vulnerability prioritization</h3>
+        <p>CVSS недостатньо: додаємо exploitability, asset value і exposure.</p>
+        <a href="#" class="more">READ MORE →</a>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2026 CYBERSEC. Усі права захищені.</div>
+      <div class="footer-links">
+        <a href="resources.html">Privacy Policy</a>
+        <a href="resources.html">Terms of Use</a>
+      </div>
+      <div class="socials">
+        <a href="contacts.html">GitHub</a>
+        <a href="contacts.html">LinkedIn</a>
+        <a href="contacts.html">X</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
