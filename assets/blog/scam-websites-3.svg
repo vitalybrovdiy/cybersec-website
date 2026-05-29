@@ -1,22 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Scam websites">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="SCAM WEBSITES EXAMPLE PANEL A">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#05070a"/><stop offset="0.55" stop-color="#071511"/><stop offset="1" stop-color="#020304"/></linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#010302"/><stop offset="0.45" stop-color="#05130c"/><stop offset="1" stop-color="#000"/></linearGradient>
+    <radialGradient id="pulse" cx="50%" cy="45%" r="65%"><stop offset="0" stop-color="#f5ff39" stop-opacity="0.18"/><stop offset="0.55" stop-color="#39ff4a" stop-opacity="0.08"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
     <filter id="glow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0v48" fill="none" stroke="#faff00" stroke-opacity="0.12"/></pattern>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0v44" fill="none" stroke="#f5ff39" stroke-opacity="0.12"/></pattern>
   </defs>
   <rect width="1200" height="675" fill="url(#bg)"/>
   <rect width="1200" height="675" fill="url(#grid)"/>
-  <g opacity="0.22" font-family="monospace" font-size="18" fill="#faff00">
-    <text x="44" y="70">01001100 01101111 01100111 00101110 00101110</text><text x="730" y="126">AUTH HASH TOKEN TLS DNS</text><text x="88" y="604">CYBERSEC SIGNAL MAP</text>
+  <rect width="1200" height="675" fill="url(#pulse)"/>
+  <g opacity="0.22" font-family="JetBrains Mono, monospace" font-size="17" fill="#f5ff39">
+    <text x="52" y="70">01000011 01011001 01000010 01000101 01010010</text>
+    <text x="770" y="120">TLS DNS HASH JWT CVE OSINT</text>
+    <text x="68" y="624">CYBERSEC STATIC PORTAL // LOCAL-FIRST</text>
   </g>
-  <g filter="url(#glow)">
-    <path d="M180 480 C300 300 430 570 560 350 S830 230 1030 430" fill="none" stroke="#faff00" stroke-width="5" stroke-linecap="round" opacity="0.9"/>
-    <circle cx="255" cy="405" r="56" fill="none" stroke="#39ff14" stroke-width="7"/><circle cx="585" cy="342" r="82" fill="none" stroke="#faff00" stroke-width="8"/><circle cx="910" cy="365" r="64" fill="none" stroke="#39ff14" stroke-width="7"/>
-    <rect x="168" y="150" width="864" height="345" rx="28" fill="#07100d" fill-opacity="0.72" stroke="#faff00" stroke-width="3"/>
-    <path d="M260 360h180l70-105 120 210 95-150h220" fill="none" stroke="#39ff14" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="510" cy="255" r="16" fill="#faff00"/><circle cx="725" cy="315" r="16" fill="#39ff14"/>
-  </g>
-  <text x="600" y="214" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="54" font-weight="800" fill="#faff00" filter="url(#glow)">SCAM WEBSITES</text>
-  <text x="600" y="274" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="24" fill="#dfffe7">Example gallery A</text>
-  <rect x="64" y="56" width="1072" height="563" rx="32" fill="none" stroke="#faff00" stroke-opacity="0.45" stroke-width="2"/>
+  <g filter="url(#glow)"><rect x="250" y="190" width="700" height="410" rx="24" fill="#06100b" stroke="#f5ff39" stroke-width="6"/><path d="M250 270h700" stroke="#f5ff39" stroke-width="6"/><circle cx="304" cy="232" r="14" fill="#39ff4a"/><circle cx="350" cy="232" r="14" fill="#f5ff39"/><rect x="330" y="340" width="540" height="74" rx="14" fill="rgba(255,43,214,.08)" stroke="#39ff4a"/><path d="M390 378h340M390 468h230" stroke="#f5ff39" stroke-width="9" stroke-linecap="round"/><text x="600" y="386" text-anchor="middle" font-family="monospace" font-size="24" fill="#39ff4a">VERIFY BEFORE LOGIN</text></g>
+  <rect x="54" y="48" width="1092" height="579" rx="32" fill="none" stroke="#f5ff39" stroke-opacity="0.48" stroke-width="2"/>
+  <path d="M80 112h210M910 563h210" stroke="#39ff4a" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+  <text x="600" y="92" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="22" fill="#39ff4a">EXAMPLE PANEL A</text>
+  <text x="600" y="646" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="18" fill="#dfffe7">fraud landing page signals // image 4</text>
+  <text x="600" y="154" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="48" font-weight="800" fill="#f5ff39" filter="url(#glow)">SCAM WEBSITES</text>
 </svg>
