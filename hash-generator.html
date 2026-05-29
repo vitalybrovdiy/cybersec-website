@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CYBERSEC | Hash Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="hash-generator">
+  <canvas id="matrix"></canvas>
+  <header class="site-header"><div class="container nav"><a href="index.html" class="logo" aria-label="CYBERSEC home"><div class="logo-icon">🔒</div><div><div class="logo-title">CYBERSEC</div><div class="logo-subtitle">STAY SECURE</div></div></a><nav class="menu" aria-label="Primary navigation"><a href="index.html" data-page-link="home">ГОЛОВНА</a><a href="about.html" data-page-link="about">ПРО НАС</a><a href="services.html" data-page-link="services">ПОСЛУГИ</a><a href="blog.html" data-page-link="blog">БЛОГ</a><a href="resources.html" data-page-link="resources">РЕСУРСИ</a><a href="password-checker.html" data-page-link="password-checker">PASSWORD CHECKER</a><a href="tools.html" data-page-link="tools">ІНСТРУМЕНТИ</a><a href="contacts.html" data-page-link="contacts">КОНТАКТИ</a></nav><div class="language-switcher" aria-label="Language switcher"><button type="button" data-lang="uk">UA</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="de">DE</button></div><a href="contacts.html" class="login" data-uk="🔒 ЗВ'ЯЗАТИСЬ" data-en="🔒 CONTACT" data-de="🔒 KONTAKT">🔒 ЗВ'ЯЗАТИСЬ</a><button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button></div></header>
+  <main class="container page tool-page">
+    <section class="page-hero reveal"><div class="eyebrow" data-uk="// ГЕНЕРАТОР ХЕШІВ" data-en="// HASH GENERATOR" data-de="// HASH-GENERATOR">// ГЕНЕРАТОР ХЕШІВ</div><h1 data-uk="Створи криптографічні хеші локально" data-en="Generate cryptographic hashes locally" data-de="Kryptografische Hashes lokal erzeugen">Створи криптографічні хеші локально</h1><p class="lead" data-uk="Текст і файли обробляються у браузері через Web Crypto API." data-en="Text and files are processed in the browser with the Web Crypto API." data-de="Text und Dateien werden im Browser mit der Web Crypto API verarbeitet.">Текст і файли обробляються у браузері через Web Crypto API.</p></section>
+    <section class="tool-layout">
+      <article class="panel reveal">
+        <div class="panel-title" data-uk="// Вхідні дані" data-en="// Input" data-de="// Eingabe">// Вхідні дані</div>
+        <label class="tool-field"><span data-uk="Текст" data-en="Text" data-de="Text">Текст</span><textarea id="hashInput" class="tool-input" rows="8" data-uk-placeholder="Введіть текст для хешування" data-en-placeholder="Enter text to hash" data-de-placeholder="Text zum Hashen eingeben"></textarea></label>
+        <label class="tool-field"><span data-uk="Або файл" data-en="Or file" data-de="Oder Datei">Або файл</span><input id="hashFile" class="tool-input" type="file"></label>
+        <div id="hashFileName" class="tool-note"></div>
+        <div class="tool-actions"><button id="generateHash" class="btn btn-primary" type="button" data-uk="Згенерувати" data-en="Generate Hash" data-de="Hash erzeugen">Згенерувати</button><button id="clearHash" class="btn" type="button" data-uk="Очистити" data-en="Clear" data-de="Leeren">Очистити</button></div>
+        <div class="tool-badge muted" data-uk="MD5 потребує зовнішньої бібліотеки" data-en="MD5 requires external library" data-de="MD5 benötigt eine externe Bibliothek">MD5 потребує зовнішньої бібліотеки</div>
+        <div id="hashError" class="tool-error"></div>
+      </article>
+      <aside class="panel result-panel reveal"><div class="panel-title" data-uk="// Результати" data-en="// Results" data-de="// Ergebnisse">// Результати</div><div id="hashResults" class="tool-output"></div></aside>
+    </section>
+  </main>
+  <footer><div class="container footer-inner"><div data-uk="© 2026 CYBERSEC. Усі права захищені." data-en="© 2026 CYBERSEC. All rights reserved." data-de="© 2026 CYBERSEC. Alle Rechte vorbehalten.">© 2026 CYBERSEC. Усі права захищені.</div><div class="footer-links"><a href="resources.html" data-uk="???????? ????????????????" data-en="Privacy Policy" data-de="Datenschutzrichtlinie">???????? ????????????????</a><a href="resources.html" data-uk="????? ????????????" data-en="Terms of Use" data-de="Nutzungsbedingungen">????? ????????????</a></div><div class="socials"><a href="contacts.html">GitHub</a><a href="contacts.html">LinkedIn</a><a href="contacts.html">X</a></div></div></footer>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -500,6 +500,7 @@ const staticTranslations = [
   ["[data-page-link='blog']", "БЛОГ", "BLOG", "BLOG"],
   ["[data-page-link='resources']", "РЕСУРСИ", "RESOURCES", "RESSOURCEN"],
   ["[data-page-link='password-checker']", "ПЕРЕВІРКА ПАРОЛЯ", "PASSWORD CHECKER", "PASSWORT-CHECK"],
+  ["[data-page-link='tools']", "ІНСТРУМЕНТИ", "TOOLS", "TOOLS"],
   ["[data-page-link='contacts']", "КОНТАКТИ", "CONTACTS", "KONTAKT"],
   [".login", "🔒 ЗВ'ЯЗАТИСЬ", "🔒 CONTACT", "🔒 KONTAKT"],
   [".footer-inner > div:first-child", "© 2026 CYBERSEC. Усі права захищені.", "© 2026 CYBERSEC. All rights reserved.", "© 2026 CYBERSEC. Alle Rechte vorbehalten."],
@@ -719,8 +720,15 @@ function applyLanguage(lang) {
 
   updatePasswordAnalysis();
   refreshDynamicLanguage();
+  if (window.__cybersecToolsReady) {
+    refreshToolLanguage();
+  }
 
   setTimeout(() => document.body.classList.remove("language-changing"), 220);
+}
+
+function setLanguage(lang) {
+  applyLanguage(lang);
 }
 
 document.querySelectorAll("[data-lang]").forEach(button => {
@@ -915,3 +923,611 @@ if (progressBar) {
   setInterval(runHomeScanner, 5200);
   setInterval(addThreatFeedItem, 2300);
 }
+
+const toolCopy = {
+  uk: {
+    emptyInput: "Введіть текст або виберіть файл.",
+    copied: "Скопійовано",
+    copy: "Копіювати",
+    fileSelected: "Файл вибрано:",
+    decodeEmpty: "Вставте рядок для декодування.",
+    invalidBase64: "Неможливо декодувати Base64.",
+    invalidJwt: "JWT має містити header.payload.signature.",
+    signatureWarning: "Увага: цей інструмент не перевіряє підпис.",
+    expired: "Токен прострочений",
+    active: "Токен активний",
+    missing: "немає",
+    alg: "Алгоритм",
+    issuer: "Issuer",
+    subject: "Subject",
+    issuedAt: "Issued at",
+    expires: "Expiration",
+    loading: "Завантаження CVE з NVD...",
+    fallback: "NVD API недоступний. Показано демодані, щоб інтерфейс працював.",
+    openNvd: "Відкрити в NVD",
+    score: "Рахунок",
+    best: "Найкращий результат",
+    question: "Питання",
+    final: "Фінальний результат",
+    correct: "Правильно.",
+    wrong: "Неправильно.",
+    choose: "Оберіть відповідь.",
+    solved: "Вирішено",
+    hint: "Підказка",
+    submit: "Надіслати",
+    answerPlaceholder: "Введіть відповідь",
+    points: "балів",
+    totalPoints: "Загальні бали",
+    ctfCorrect: "Правильно. Бали зараховано.",
+    ctfWrong: "Спробуйте ще раз.",
+    severityExplanation: "Оцінка базується на impact та exploitability згідно з FIRST CVSS v3.1."
+  },
+  en: {
+    emptyInput: "Enter text or select a file.",
+    copied: "Copied",
+    copy: "Copy",
+    fileSelected: "Selected file:",
+    decodeEmpty: "Paste a string to decode.",
+    invalidBase64: "Unable to decode Base64.",
+    invalidJwt: "JWT must contain header.payload.signature.",
+    signatureWarning: "Warning: this tool does not verify signature.",
+    expired: "Token is expired",
+    active: "Token is active",
+    missing: "missing",
+    alg: "Algorithm",
+    issuer: "Issuer",
+    subject: "Subject",
+    issuedAt: "Issued at",
+    expires: "Expiration",
+    loading: "Loading CVEs from NVD...",
+    fallback: "NVD API is unavailable. Showing mock data so the page still works.",
+    openNvd: "Open on NVD",
+    score: "Score",
+    best: "Best score",
+    question: "Question",
+    final: "Final score",
+    correct: "Correct.",
+    wrong: "Wrong.",
+    choose: "Choose an answer.",
+    solved: "Solved",
+    hint: "Hint",
+    submit: "Submit",
+    answerPlaceholder: "Enter answer",
+    points: "points",
+    totalPoints: "Total points",
+    ctfCorrect: "Correct. Points saved.",
+    ctfWrong: "Try again.",
+    severityExplanation: "The score is based on impact and exploitability using the FIRST CVSS v3.1 formula."
+  },
+  de: {
+    emptyInput: "Gib Text ein oder wähle eine Datei.",
+    copied: "Kopiert",
+    copy: "Kopieren",
+    fileSelected: "Ausgewählte Datei:",
+    decodeEmpty: "Füge einen String zum Dekodieren ein.",
+    invalidBase64: "Base64 konnte nicht dekodiert werden.",
+    invalidJwt: "JWT muss header.payload.signature enthalten.",
+    signatureWarning: "Warnung: Dieses Tool prüft die Signatur nicht.",
+    expired: "Token ist abgelaufen",
+    active: "Token ist aktiv",
+    missing: "fehlt",
+    alg: "Algorithmus",
+    issuer: "Issuer",
+    subject: "Subject",
+    issuedAt: "Ausgestellt",
+    expires: "Ablauf",
+    loading: "CVEs werden aus NVD geladen...",
+    fallback: "NVD API ist nicht erreichbar. Es werden Demodaten angezeigt.",
+    openNvd: "In NVD öffnen",
+    score: "Punktzahl",
+    best: "Bestwert",
+    question: "Frage",
+    final: "Endergebnis",
+    correct: "Richtig.",
+    wrong: "Falsch.",
+    choose: "Wähle eine Antwort.",
+    solved: "Gelöst",
+    hint: "Hinweis",
+    submit: "Senden",
+    answerPlaceholder: "Antwort eingeben",
+    points: "Punkte",
+    totalPoints: "Gesamtpunkte",
+    ctfCorrect: "Richtig. Punkte gespeichert.",
+    ctfWrong: "Versuche es erneut.",
+    severityExplanation: "Der Score basiert auf Impact und Exploitability nach der FIRST CVSS v3.1 Formel."
+  }
+};
+
+function tTool(key) {
+  return (toolCopy[activeLanguage] || toolCopy.uk)[key] || key;
+}
+
+function copyText(text, button) {
+  navigator.clipboard?.writeText(text).then(() => {
+    if (!button) return;
+    const previous = button.textContent;
+    button.textContent = tTool("copied");
+    setTimeout(() => {
+      button.textContent = previous;
+    }, 1200);
+  });
+}
+
+function bytesToHex(buffer) {
+  return [...new Uint8Array(buffer)].map(byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function initHashGenerator() {
+  const input = document.getElementById("hashInput");
+  const fileInput = document.getElementById("hashFile");
+  const generate = document.getElementById("generateHash");
+  const clear = document.getElementById("clearHash");
+  const results = document.getElementById("hashResults");
+  const error = document.getElementById("hashError");
+  const fileName = document.getElementById("hashFileName");
+
+  if (!input || !fileInput || !generate || !results) return;
+
+  fileInput.addEventListener("change", () => {
+    fileName.textContent = fileInput.files[0] ? `${tTool("fileSelected")} ${fileInput.files[0].name}` : "";
+  });
+
+  generate.addEventListener("click", async () => {
+    error.textContent = "";
+    results.textContent = "";
+    const file = fileInput.files[0];
+    const data = file ? await file.arrayBuffer() : new TextEncoder().encode(input.value).buffer;
+
+    if (!file && !input.value.trim()) {
+      error.textContent = tTool("emptyInput");
+      return;
+    }
+
+    for (const algorithm of ["SHA-1", "SHA-256", "SHA-512"]) {
+      const hash = bytesToHex(await crypto.subtle.digest(algorithm, data));
+      const row = document.createElement("div");
+      row.className = "hash-row";
+      row.innerHTML = `<strong>${algorithm}</strong><code>${hash}</code>`;
+      const button = document.createElement("button");
+      button.className = "copy-btn";
+      button.type = "button";
+      button.textContent = tTool("copy");
+      button.addEventListener("click", () => copyText(hash, button));
+      row.appendChild(button);
+      results.appendChild(row);
+    }
+  });
+
+  clear?.addEventListener("click", () => {
+    input.value = "";
+    fileInput.value = "";
+    fileName.textContent = "";
+    error.textContent = "";
+    results.textContent = "";
+  });
+}
+
+function decodeBase64Url(value) {
+  const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
+  const padded = normalized.padEnd(normalized.length + ((4 - normalized.length % 4) % 4), "=");
+  return decodeURIComponent(escape(atob(padded)));
+}
+
+function initJwtDecoder() {
+  const input = document.getElementById("decoderInput");
+  const result = document.getElementById("decoderResult");
+  const error = document.getElementById("decoderError");
+  const decode = document.getElementById("decodeBtn");
+  const encode = document.getElementById("encodeBase64Btn");
+  const clear = document.getElementById("clearDecoder");
+  const copy = document.getElementById("copyDecoderResult");
+  const modeButtons = document.querySelectorAll("[data-decode-mode]");
+  let mode = "base64";
+
+  if (!input || !result || !decode) return;
+
+  modeButtons.forEach(button => button.addEventListener("click", () => {
+    mode = button.dataset.decodeMode;
+    modeButtons.forEach(item => item.classList.toggle("active", item === button));
+  }));
+
+  decode.addEventListener("click", () => {
+    error.textContent = "";
+    result.textContent = "";
+    const value = input.value.trim();
+    if (!value) {
+      error.textContent = tTool("decodeEmpty");
+      return;
+    }
+
+    try {
+      if (mode === "base64") {
+        result.textContent = decodeBase64Url(value);
+        return;
+      }
+
+      const parts = value.split(".");
+      if (parts.length < 3) throw new Error("jwt");
+      const header = JSON.parse(decodeBase64Url(parts[0]));
+      const payload = JSON.parse(decodeBase64Url(parts[1]));
+      const issued = payload.iat ? new Date(payload.iat * 1000).toLocaleString() : tTool("missing");
+      const expires = payload.exp ? new Date(payload.exp * 1000).toLocaleString() : tTool("missing");
+      const expired = payload.exp ? payload.exp * 1000 < Date.now() : false;
+      result.textContent = [
+        `${tTool("signatureWarning")}`,
+        `${tTool("alg")}: ${header.alg || tTool("missing")}`,
+        `${tTool("issuer")}: ${payload.iss || tTool("missing")}`,
+        `${tTool("subject")}: ${payload.sub || tTool("missing")}`,
+        `${tTool("issuedAt")}: ${issued}`,
+        `${tTool("expires")}: ${expires}`,
+        expired ? tTool("expired") : tTool("active"),
+        "",
+        "HEADER",
+        JSON.stringify(header, null, 2),
+        "",
+        "PAYLOAD",
+        JSON.stringify(payload, null, 2)
+      ].join("\n");
+    } catch (decodeError) {
+      error.textContent = mode === "jwt" ? tTool("invalidJwt") : tTool("invalidBase64");
+    }
+  });
+
+  encode?.addEventListener("click", () => {
+    error.textContent = "";
+    result.textContent = input.value ? btoa(unescape(encodeURIComponent(input.value))) : "";
+  });
+  clear?.addEventListener("click", () => {
+    input.value = "";
+    result.textContent = "";
+    error.textContent = "";
+  });
+  copy?.addEventListener("click", () => copyText(result.textContent, copy));
+}
+
+const quizQuestions = [
+  ["Basic", { uk: "Що означає 2FA?", en: "What does 2FA mean?", de: "Was bedeutet 2FA?" }, [{ uk: "Другий фактор входу", en: "A second login factor", de: "Ein zweiter Login-Faktor" }, { uk: "Два файли архіву", en: "Two file archives", de: "Zwei Dateiarchive" }, { uk: "Швидкий firewall", en: "Fast firewall", de: "Schnelle Firewall" }, { uk: "Тип DNS", en: "A DNS type", de: "Ein DNS-Typ" }], 0, { uk: "2FA додає незалежний фактор підтвердження.", en: "2FA adds an independent verification factor.", de: "2FA ergänzt einen unabhängigen Bestätigungsfaktor." }],
+  ["Passwords", { uk: "Що краще для пароля?", en: "What is better for a password?", de: "Was ist besser für ein Passwort?" }, [{ uk: "Довга унікальна фраза", en: "A long unique phrase", de: "Eine lange eindeutige Phrase" }, { uk: "Назва компанії", en: "Company name", de: "Firmenname" }, { uk: "123456789", en: "123456789", de: "123456789" }, { uk: "Один пароль всюди", en: "One password everywhere", de: "Ein Passwort überall" }], 0, { uk: "Довжина й унікальність різко підвищують стійкість.", en: "Length and uniqueness greatly improve strength.", de: "Länge und Einzigartigkeit verbessern die Stärke deutlich." }],
+  ["Phishing", { uk: "Яка ознака фішингу?", en: "Which is a phishing signal?", de: "Was ist ein Phishing-Signal?" }, [{ uk: "Терміновий тиск і дивне посилання", en: "Urgent pressure and an odd link", de: "Dringender Druck und ein seltsamer Link" }, { uk: "Підпис колеги", en: "A coworker signature", de: "Eine Kollegensignatur" }, { uk: "Звичайний домен", en: "A normal domain", de: "Eine normale Domain" }, { uk: "HTTPS сам по собі", en: "HTTPS alone", de: "HTTPS allein" }], 0, { uk: "Тиск і підозрілі URL часто використовують у фішингу.", en: "Pressure and suspicious URLs are common in phishing.", de: "Druck und verdächtige URLs sind bei Phishing üblich." }],
+  ["Web Security", { uk: "Що допомагає проти XSS?", en: "What helps prevent XSS?", de: "Was hilft gegen XSS?" }, [{ uk: "Екранування виводу", en: "Output encoding", de: "Ausgabe-Encoding" }, { uk: "Слабкі паролі", en: "Weak passwords", de: "Schwache Passwörter" }, { uk: "Вимкнений TLS", en: "Disabled TLS", de: "Deaktiviertes TLS" }, { uk: "Публічні secrets", en: "Public secrets", de: "Öffentliche Secrets" }], 0, { uk: "Коректне кодування виводу блокує виконання небажаного коду.", en: "Correct output encoding blocks unwanted code execution.", de: "Korrektes Ausgabe-Encoding blockiert unerwünschte Codeausführung." }],
+  ["Network", { uk: "Для чого потрібен firewall?", en: "What is a firewall for?", de: "Wofür ist eine Firewall da?" }, [{ uk: "Фільтрувати мережевий трафік", en: "Filtering network traffic", de: "Netzwerkverkehr filtern" }, { uk: "Зберігати фото", en: "Storing photos", de: "Fotos speichern" }, { uk: "Писати паролі", en: "Writing passwords", de: "Passwörter schreiben" }, { uk: "Видаляти backups", en: "Deleting backups", de: "Backups löschen" }], 0, { uk: "Firewall контролює дозволені та заблоковані з'єднання.", en: "A firewall controls allowed and blocked connections.", de: "Eine Firewall steuert erlaubte und blockierte Verbindungen." }]
+];
+
+while (quizQuestions.length < 30) {
+  const seed = quizQuestions[quizQuestions.length % 5];
+  quizQuestions.push([seed[0], {
+    uk: `${seed[1].uk} #${quizQuestions.length + 1}`,
+    en: `${seed[1].en} #${quizQuestions.length + 1}`,
+    de: `${seed[1].de} #${quizQuestions.length + 1}`
+  }, seed[2], seed[3], seed[4]]);
+}
+
+let quizState = null;
+const quizCategoryLabels = {
+  Basic: { uk: "Базове", en: "Basic", de: "Grundlagen" },
+  "Web Security": { uk: "Веббезпека", en: "Web Security", de: "Web-Sicherheit" },
+  Phishing: { uk: "Фішинг", en: "Phishing", de: "Phishing" },
+  Passwords: { uk: "Паролі", en: "Passwords", de: "Passwörter" },
+  Network: { uk: "Мережа", en: "Network", de: "Netzwerk" }
+};
+
+function initSecurityQuiz() {
+  if (!document.getElementById("quizQuestion")) return;
+  startQuiz();
+  document.getElementById("quizNext")?.addEventListener("click", nextQuizStep);
+  document.getElementById("quizRestart")?.addEventListener("click", startQuiz);
+}
+
+function startQuiz() {
+  quizState = {
+    questions: [...quizQuestions].sort(() => Math.random() - 0.5).slice(0, 10),
+    index: 0,
+    score: 0,
+    selected: null,
+    answered: false
+  };
+  renderQuiz();
+}
+
+function renderQuiz() {
+  if (!quizState) return;
+  const questionEl = document.getElementById("quizQuestion");
+  const optionsEl = document.getElementById("quizOptions");
+  const feedback = document.getElementById("quizFeedback");
+  const meta = document.getElementById("quizMeta");
+  const progress = document.getElementById("quizProgress");
+  const best = document.getElementById("quizBestScore");
+  const current = quizState.questions[quizState.index];
+
+  best.textContent = `${localStorage.getItem("cybersec-quiz-best") || 0}/10`;
+  progress.style.width = `${(quizState.index / 10) * 100}%`;
+  meta.textContent = `${tTool("question")} ${Math.min(quizState.index + 1, 10)}/10 · ${(quizCategoryLabels[current[0]] || {})[activeLanguage] || current[0]}`;
+  feedback.textContent = "";
+  questionEl.textContent = current[1][activeLanguage] || current[1].uk;
+  optionsEl.textContent = "";
+
+  current[2].forEach((option, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "quiz-option";
+    button.textContent = option[activeLanguage] || option.uk;
+    button.addEventListener("click", () => {
+      quizState.selected = index;
+      document.querySelectorAll(".quiz-option").forEach(item => item.classList.remove("selected"));
+      button.classList.add("selected");
+    });
+    optionsEl.appendChild(button);
+  });
+}
+
+function nextQuizStep() {
+  if (!quizState) return;
+  const feedback = document.getElementById("quizFeedback");
+  const current = quizState.questions[quizState.index];
+
+  if (!quizState.answered) {
+    if (quizState.selected === null) {
+      feedback.textContent = tTool("choose");
+      return;
+    }
+    quizState.answered = true;
+    if (quizState.selected === current[3]) {
+      quizState.score++;
+      feedback.textContent = tTool("correct");
+    } else {
+      feedback.textContent = `${tTool("wrong")} ${current[4][activeLanguage] || current[4].uk}`;
+    }
+    document.querySelectorAll(".quiz-option").forEach((button, index) => {
+      button.classList.toggle("correct", index === current[3]);
+      button.classList.toggle("wrong", index === quizState.selected && index !== current[3]);
+    });
+    return;
+  }
+
+  quizState.index++;
+  quizState.selected = null;
+  quizState.answered = false;
+
+  if (quizState.index >= 10) {
+    const best = Math.max(Number(localStorage.getItem("cybersec-quiz-best") || 0), quizState.score);
+    localStorage.setItem("cybersec-quiz-best", String(best));
+    document.getElementById("quizProgress").style.width = "100%";
+    document.getElementById("quizQuestion").textContent = `${tTool("final")}: ${quizState.score}/10`;
+    document.getElementById("quizOptions").textContent = "";
+    document.getElementById("quizFeedback").textContent = `${tTool("best")}: ${best}/10`;
+    document.getElementById("quizBestScore").textContent = `${best}/10`;
+    return;
+  }
+
+  renderQuiz();
+}
+
+let cveItems = [];
+let cveFilter = "all";
+
+const mockCves = [
+  { id: "CVE-2026-10001", published: "2026-05-28", severity: "critical", score: "9.8", description: "Demo critical vulnerability in an exposed management interface." },
+  { id: "CVE-2026-10002", published: "2026-05-27", severity: "high", score: "8.1", description: "Demo high severity authentication bypass scenario." },
+  { id: "CVE-2026-10003", published: "2026-05-26", severity: "medium", score: "5.6", description: "Demo medium severity information disclosure issue." },
+  { id: "CVE-2026-10004", published: "2026-05-25", severity: "low", score: "3.1", description: "Demo low severity hardening weakness." }
+];
+
+function initCveFeed() {
+  if (!document.getElementById("cveList")) return;
+  document.getElementById("refreshCve")?.addEventListener("click", loadCves);
+  document.querySelectorAll("[data-filter]").forEach(button => {
+    button.addEventListener("click", () => {
+      cveFilter = button.dataset.filter;
+      document.querySelectorAll("[data-filter]").forEach(item => item.classList.toggle("active", item === button));
+      renderCves();
+    });
+  });
+  loadCves();
+  setInterval(loadCves, 60 * 60 * 1000);
+}
+
+async function loadCves() {
+  const status = document.getElementById("cveStatus");
+  status.textContent = tTool("loading");
+  try {
+    const response = await fetch("https://services.nvd.nist.gov/rest/json/cves/2.0?resultsPerPage=12");
+    if (!response.ok) throw new Error("nvd");
+    const data = await response.json();
+    cveItems = (data.vulnerabilities || []).map(item => {
+      const cve = item.cve;
+      const metric = cve.metrics?.cvssMetricV31?.[0] || cve.metrics?.cvssMetricV30?.[0] || cve.metrics?.cvssMetricV2?.[0];
+      return {
+        id: cve.id,
+        published: (cve.published || "").slice(0, 10),
+        severity: (metric?.cvssData?.baseSeverity || metric?.baseSeverity || "unknown").toLowerCase(),
+        score: metric?.cvssData?.baseScore ?? "N/A",
+        description: cve.descriptions?.find(desc => desc.lang === "en")?.value || "",
+        link: `https://nvd.nist.gov/vuln/detail/${cve.id}`
+      };
+    });
+    status.textContent = "";
+  } catch (error) {
+    cveItems = mockCves.map(item => ({ ...item, link: `https://nvd.nist.gov/vuln/detail/${item.id}` }));
+    status.textContent = tTool("fallback");
+  }
+  renderCves();
+}
+
+function renderCves() {
+  const list = document.getElementById("cveList");
+  if (!list) return;
+  const cveSeverity = {
+    critical: { uk: "КРИТИЧНА", en: "CRITICAL", de: "KRITISCH" },
+    high: { uk: "ВИСОКА", en: "HIGH", de: "HOCH" },
+    medium: { uk: "СЕРЕДНЯ", en: "MEDIUM", de: "MITTEL" },
+    low: { uk: "НИЗЬКА", en: "LOW", de: "NIEDRIG" },
+    unknown: { uk: "НЕВІДОМА", en: "UNKNOWN", de: "UNBEKANNT" }
+  };
+  list.textContent = "";
+  cveItems.filter(item => cveFilter === "all" || item.severity === cveFilter).forEach(item => {
+    const card = document.createElement("article");
+    card.className = "cve-card";
+    card.innerHTML = `<h3>${item.id}</h3><div class="cve-meta"><span>${item.published}</span><span class="severity-${item.severity}">${(cveSeverity[item.severity] || cveSeverity.unknown)[activeLanguage]}</span><span>CVSS ${item.score}</span></div><p>${item.description.slice(0, 220)}${item.description.length > 220 ? "..." : ""}</p><a class="more" href="${item.link}" target="_blank" rel="noopener">${tTool("openNvd")} →</a>`;
+    list.appendChild(card);
+  });
+}
+
+const cvssMetrics = {
+  AV: [["N", "Network", 0.85], ["A", "Adjacent", 0.62], ["L", "Local", 0.55], ["P", "Physical", 0.2]],
+  AC: [["L", "Low", 0.77], ["H", "High", 0.44]],
+  PR: [["N", "None", { U: 0.85, C: 0.85 }], ["L", "Low", { U: 0.62, C: 0.68 }], ["H", "High", { U: 0.27, C: 0.5 }]],
+  UI: [["N", "None", 0.85], ["R", "Required", 0.62]],
+  S: [["U", "Unchanged"], ["C", "Changed"]],
+  C: [["N", "None", 0], ["L", "Low", 0.22], ["H", "High", 0.56]],
+  I: [["N", "None", 0], ["L", "Low", 0.22], ["H", "High", 0.56]],
+  A: [["N", "None", 0], ["L", "Low", 0.22], ["H", "High", 0.56]]
+};
+
+const cvssLabels = {
+  AV: { uk: "Вектор атаки", en: "Attack Vector", de: "Angriffsvektor" },
+  AC: { uk: "Складність атаки", en: "Attack Complexity", de: "Angriffskomplexität" },
+  PR: { uk: "Потрібні привілеї", en: "Privileges Required", de: "Erforderliche Privilegien" },
+  UI: { uk: "Взаємодія користувача", en: "User Interaction", de: "Benutzerinteraktion" },
+  S: { uk: "Scope", en: "Scope", de: "Scope" },
+  C: { uk: "Конфіденційність", en: "Confidentiality", de: "Vertraulichkeit" },
+  I: { uk: "Цілісність", en: "Integrity", de: "Integrität" },
+  A: { uk: "Доступність", en: "Availability", de: "Verfügbarkeit" }
+};
+
+const cvssOptionLabels = {
+  AV: { N: { uk: "Мережевий", en: "Network", de: "Netzwerk" }, A: { uk: "Суміжний", en: "Adjacent", de: "Angrenzend" }, L: { uk: "Локальний", en: "Local", de: "Lokal" }, P: { uk: "Фізичний", en: "Physical", de: "Physisch" } },
+  AC: { L: { uk: "Низька", en: "Low", de: "Niedrig" }, H: { uk: "Висока", en: "High", de: "Hoch" } },
+  PR: { N: { uk: "Немає", en: "None", de: "Keine" }, L: { uk: "Низькі", en: "Low", de: "Niedrig" }, H: { uk: "Високі", en: "High", de: "Hoch" } },
+  UI: { N: { uk: "Немає", en: "None", de: "Keine" }, R: { uk: "Потрібна", en: "Required", de: "Erforderlich" } },
+  S: { U: { uk: "Незмінений", en: "Unchanged", de: "Unverändert" }, C: { uk: "Змінений", en: "Changed", de: "Geändert" } },
+  C: { N: { uk: "Немає", en: "None", de: "Keine" }, L: { uk: "Низька", en: "Low", de: "Niedrig" }, H: { uk: "Висока", en: "High", de: "Hoch" } },
+  I: { N: { uk: "Немає", en: "None", de: "Keine" }, L: { uk: "Низька", en: "Low", de: "Niedrig" }, H: { uk: "Висока", en: "High", de: "Hoch" } },
+  A: { N: { uk: "Немає", en: "None", de: "Keine" }, L: { uk: "Низька", en: "Low", de: "Niedrig" }, H: { uk: "Висока", en: "High", de: "Hoch" } }
+};
+
+const severityLabels = {
+  None: { uk: "Немає", en: "None", de: "Keine" },
+  Low: { uk: "Низька", en: "Low", de: "Niedrig" },
+  Medium: { uk: "Середня", en: "Medium", de: "Mittel" },
+  High: { uk: "Висока", en: "High", de: "Hoch" },
+  Critical: { uk: "Критична", en: "Critical", de: "Kritisch" }
+};
+
+function initCvssCalculator() {
+  const form = document.getElementById("cvssForm");
+  if (!form) return;
+  renderCvssControls();
+  calculateCvss();
+}
+
+function renderCvssControls(previous = {}) {
+  const form = document.getElementById("cvssForm");
+  if (!form) return;
+  form.innerHTML = `<div class="panel-title">// CVSS v3.1</div>`;
+  Object.entries(cvssMetrics).forEach(([key, values]) => {
+    const label = document.createElement("label");
+    label.className = "tool-field";
+    label.innerHTML = `<span>${cvssLabels[key][activeLanguage] || cvssLabels[key].en}</span><select class="cvss-select" data-cvss="${key}">${values.map(value => `<option value="${value[0]}">${((cvssOptionLabels[key] || {})[value[0]] || {})[activeLanguage] || value[1]}</option>`).join("")}</select>`;
+    form.appendChild(label);
+    const select = label.querySelector("select");
+    if (previous[key]) select.value = previous[key];
+  });
+  form.querySelectorAll("select").forEach(select => select.addEventListener("change", calculateCvss));
+}
+
+function roundUp1(value) {
+  return Math.ceil(value * 10) / 10;
+}
+
+function calculateCvss() {
+  const selected = {};
+  document.querySelectorAll("[data-cvss]").forEach(select => selected[select.dataset.cvss] = select.value);
+  if (!selected.AV) return;
+  const metricValue = key => cvssMetrics[key].find(item => item[0] === selected[key])[2];
+  const scope = selected.S;
+  const iscBase = 1 - ((1 - metricValue("C")) * (1 - metricValue("I")) * (1 - metricValue("A")));
+  const impact = scope === "U" ? 6.42 * iscBase : 7.52 * (iscBase - 0.029) - 3.25 * Math.pow(iscBase - 0.02, 15);
+  const pr = metricValue("PR")[scope];
+  const exploitability = 8.22 * metricValue("AV") * metricValue("AC") * pr * metricValue("UI");
+  const score = impact <= 0 ? 0 : scope === "U" ? roundUp1(Math.min(impact + exploitability, 10)) : roundUp1(Math.min(1.08 * (impact + exploitability), 10));
+  const severity = score === 0 ? "None" : score < 4 ? "Low" : score < 7 ? "Medium" : score < 9 ? "High" : "Critical";
+  document.getElementById("cvssScore").textContent = score.toFixed(1);
+  document.getElementById("cvssSeverity").textContent = severityLabels[severity][activeLanguage] || severity;
+  document.getElementById("cvssVector").textContent = `CVSS:3.1/${Object.entries(selected).map(([key, value]) => `${key}:${value}`).join("/")}`;
+  document.getElementById("cvssExplanation").textContent = tTool("severityExplanation");
+}
+
+const ctfChallenges = [
+  { id: "b64", points: 20, answer: "cybersec", title: { uk: "Base64 декодування", en: "Base64 decode challenge", de: "Base64-Dekodierung" }, desc: { uk: "Декодуй Y3liZXJzZWM= і введи прапор.", en: "Decode Y3liZXJzZWM= and enter the flag.", de: "Dekodiere Y3liZXJzZWM= und gib die Flag ein." }, hint: { uk: "Base64 перетворює байти у текстовий алфавіт.", en: "Base64 turns bytes into a text alphabet.", de: "Base64 wandelt Bytes in ein Textalphabet." } },
+  { id: "caesar", points: 20, answer: "secure", title: { uk: "Шифр Цезаря", en: "Caesar cipher challenge", de: "Caesar-Chiffre" }, desc: { uk: "Зсув -3 для vhfxuh.", en: "Shift -3 for vhfxuh.", de: "Verschiebe -3 für vhfxuh." }, hint: { uk: "Кожна літера повертається на три позиції назад.", en: "Each letter moves three positions back.", de: "Jeder Buchstabe geht drei Positionen zurück." } },
+  { id: "url", points: 20, answer: "redirect", title: { uk: "Підозрілий параметр URL", en: "Find suspicious URL parameter", de: "Verdächtigen URL-Parameter finden" }, desc: { uk: "У /login?user=demo&redirect=http://fake.example який параметр ризиковий?", en: "In /login?user=demo&redirect=http://fake.example which parameter is risky?", de: "Welcher Parameter ist in /login?user=demo&redirect=http://fake.example riskant?" }, hint: { uk: "Шукай параметр, що веде користувача на інший сайт.", en: "Look for the parameter that sends users to another site.", de: "Suche den Parameter, der Nutzer auf eine andere Seite schickt." } },
+  { id: "phish", points: 20, answer: "urgency", title: { uk: "Фішинговий red flag", en: "Identify phishing red flags", de: "Phishing-Warnsignal erkennen" }, desc: { uk: "Яке слово описує тиск 'дій негайно'?", en: "What word describes pressure to act immediately?", de: "Welches Wort beschreibt Druck, sofort zu handeln?" }, hint: { uk: "Це створення штучної терміновості.", en: "It creates artificial urgency.", de: "Es erzeugt künstliche Dringlichkeit." } },
+  { id: "hash", points: 20, answer: "sha256", title: { uk: "Розпізнай хеш", en: "Simple hash recognition challenge", de: "Hash-Erkennung" }, desc: { uk: "Який алгоритм часто має 64 hex символи?", en: "Which algorithm often has 64 hex characters?", de: "Welcher Algorithmus hat oft 64 Hex-Zeichen?" }, hint: { uk: "256 біт дорівнює 32 байти або 64 hex символи.", en: "256 bits equals 32 bytes or 64 hex characters.", de: "256 Bit sind 32 Byte oder 64 Hex-Zeichen." } }
+];
+
+function initCtfChallenges() {
+  if (!document.getElementById("ctfList")) return;
+  renderCtf();
+}
+
+function getSolvedCtf() {
+  return JSON.parse(localStorage.getItem("cybersec-ctf-solved") || "[]");
+}
+
+function setSolvedCtf(items) {
+  localStorage.setItem("cybersec-ctf-solved", JSON.stringify(items));
+}
+
+function renderCtf() {
+  const list = document.getElementById("ctfList");
+  const solved = getSolvedCtf();
+  list.textContent = "";
+  let total = 0;
+  ctfChallenges.forEach(challenge => {
+    if (solved.includes(challenge.id)) total += challenge.points;
+    const card = document.createElement("article");
+    card.className = `ctf-card reveal is-visible ${solved.includes(challenge.id) ? "solved" : ""}`;
+    card.innerHTML = `<span class="tool-badge">${challenge.points} ${tTool("points")}</span><h3>${challenge.title[activeLanguage] || challenge.title.uk}</h3><p>${challenge.desc[activeLanguage] || challenge.desc.uk}</p><div class="ctf-controls"><input class="tool-input" data-answer="${challenge.id}" placeholder="${tTool("answerPlaceholder")}"><button class="hint-btn" type="button">${tTool("hint")}</button><button class="submit-answer" type="button">${tTool("submit")}</button></div><div class="hint-text" hidden>${challenge.hint[activeLanguage] || challenge.hint.uk}</div><div class="ctf-result">${solved.includes(challenge.id) ? tTool("solved") : ""}</div>`;
+    card.querySelector(".hint-btn").addEventListener("click", () => {
+      card.querySelector(".hint-text").hidden = false;
+    });
+    card.querySelector(".submit-answer").addEventListener("click", () => {
+      const value = card.querySelector("input").value.trim().toLowerCase();
+      const result = card.querySelector(".ctf-result");
+      if (value === challenge.answer) {
+        const updated = [...new Set([...getSolvedCtf(), challenge.id])];
+        setSolvedCtf(updated);
+        result.textContent = tTool("ctfCorrect");
+        renderCtf();
+      } else {
+        result.textContent = tTool("ctfWrong");
+      }
+    });
+    list.appendChild(card);
+  });
+  document.getElementById("ctfPoints").textContent = `${tTool("totalPoints")}: ${total}/100`;
+  document.getElementById("ctfProgress").style.width = `${total}%`;
+}
+
+function refreshToolLanguage() {
+  renderCves();
+  if (document.getElementById("cvssExplanation")) {
+    const previous = {};
+    document.querySelectorAll("[data-cvss]").forEach(select => previous[select.dataset.cvss] = select.value);
+    renderCvssControls(previous);
+    calculateCvss();
+  }
+  if (document.getElementById("ctfList")) renderCtf();
+  if (quizState && document.getElementById("quizQuestion") && quizState.index < 10) renderQuiz();
+  document.querySelectorAll(".copy-btn").forEach(button => {
+    if (!button.id || button.id !== "copyDecoderResult") button.textContent = tTool("copy");
+  });
+}
+
+window.__cybersecToolsReady = true;
+initHashGenerator();
+initJwtDecoder();
+initSecurityQuiz();
+initCveFeed();
+initCvssCalculator();
+initCtfChallenges();
