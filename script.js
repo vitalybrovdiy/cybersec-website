@@ -715,6 +715,8 @@ function applyLanguage(lang) {
     element.placeholder = element.dataset[`${activeLanguage}Placeholder`];
   });
 
+  updateImageAltText();
+
   document.querySelectorAll("[data-lang]").forEach(button => {
     const isActive = button.dataset.lang === activeLanguage;
     button.classList.toggle("active", isActive);
@@ -1730,6 +1732,85 @@ function initArticleSharing() {
   });
 }
 
+function updateImageAltText() {
+  document.querySelectorAll("img[data-alt-uk][data-alt-en][data-alt-de]").forEach(image => {
+    const nextAlt = image.dataset[`alt${activeLanguage.charAt(0).toUpperCase()}${activeLanguage.slice(1)}`];
+    if (nextAlt) {
+      image.alt = nextAlt;
+    }
+  });
+}
+
+function initBlogImages() {
+  const images = document.querySelectorAll(".blog-image img");
+
+  if (!images.length) {
+    return;
+  }
+
+  let modal = document.querySelector(".image-modal");
+
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.className = "image-modal";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.innerHTML = '<button type="button" aria-label="Close image">&times;</button><img alt="">';
+    document.body.appendChild(modal);
+  }
+
+  const modalImage = modal.querySelector("img");
+  const closeButton = modal.querySelector("button");
+
+  function closeModal() {
+    modal.classList.remove("open");
+    document.body.classList.remove("modal-open");
+  }
+
+  images.forEach(image => {
+    image.addEventListener("click", () => {
+      if (image.hidden || !modalImage) {
+        return;
+      }
+
+      modalImage.src = image.currentSrc || image.src;
+      modalImage.alt = image.alt;
+      modal.classList.add("open");
+      document.body.classList.add("modal-open");
+      closeButton.focus();
+    });
+
+    image.addEventListener("error", () => {
+      const figure = image.closest(".blog-image");
+      const fallback = figure ? figure.querySelector(".blog-image-fallback") : null;
+
+      image.hidden = true;
+
+      if (fallback) {
+        fallback.hidden = false;
+        const fallbackText = fallback.dataset[activeLanguage] || fallback.dataset.uk;
+        if (fallbackText) {
+          fallback.textContent = fallbackText;
+        }
+      }
+    }, { once: true });
+  });
+
+  modal.addEventListener("click", event => {
+    if (event.target === modal || event.target === closeButton) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && modal.classList.contains("open")) {
+      closeModal();
+    }
+  });
+
+  updateImageAltText();
+}
+
 window.__cybersecToolsReady = true;
 initPasswordChecker();
 document.addEventListener("DOMContentLoaded", () => {
@@ -1743,3 +1824,4 @@ initCtfChallenges();
 initBlogSearch();
 initReadingProgress();
 initArticleSharing();
+initBlogImages();
