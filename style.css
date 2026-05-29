@@ -930,6 +930,11 @@ p {
   transform: translateY(-24px) rotate(-6deg);
 }
 
+.integrated-tool-section {
+  scroll-margin-top: 110px;
+  margin-top: 42px;
+}
+
 .tools-grid,
 .tool-layout,
 .cve-list,

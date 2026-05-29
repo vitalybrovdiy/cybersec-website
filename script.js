@@ -103,6 +103,31 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
+document.querySelectorAll("[data-scroll-target]").forEach(card => {
+  card.addEventListener("click", event => {
+    if (event.target.closest("a, button")) {
+      return;
+    }
+
+    const target = document.getElementById(card.dataset.scrollTarget);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+
+  card.addEventListener("keydown", event => {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+
+    event.preventDefault();
+    const target = document.getElementById(card.dataset.scrollTarget);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+});
+
 const revealItems = document.querySelectorAll(".reveal");
 
 if ("IntersectionObserver" in window) {
@@ -499,7 +524,6 @@ const staticTranslations = [
   ["[data-page-link='services']", "ПОСЛУГИ", "SERVICES", "SERVICES"],
   ["[data-page-link='blog']", "БЛОГ", "BLOG", "BLOG"],
   ["[data-page-link='resources']", "РЕСУРСИ", "RESOURCES", "RESSOURCEN"],
-  ["[data-page-link='password-checker']", "ПЕРЕВІРКА ПАРОЛЯ", "PASSWORD CHECKER", "PASSWORT-CHECK"],
   ["[data-page-link='tools']", "ІНСТРУМЕНТИ", "TOOLS", "TOOLS"],
   ["[data-page-link='contacts']", "КОНТАКТИ", "CONTACTS", "KONTAKT"],
   [".login", "🔒 ЗВ'ЯЗАТИСЬ", "🔒 CONTACT", "🔒 KONTAKT"],
@@ -573,21 +597,6 @@ const staticTranslations = [
   ["body[data-page='contacts'] .contact-form .btn", "Надіслати", "Send", "Senden"],
   ["body[data-page='contacts'] .contact-stack .panel:nth-child(1) .panel-title", "// Прямі канали", "// Direct Channels", "// Direkte Kanäle"],
   ["body[data-page='contacts'] .contact-stack .panel:nth-child(2) .panel-title", "// Соціальні мережі", "// Social Links", "// Social Links"],
-  ["body[data-page='password-checker'] .future-tool-card .status-badge", "СКОРО", "COMING SOON", "BALD VERFÜGBAR"],
-  ["body[data-page='password-checker'] .future-tool-card:nth-child(1) h3", "Детектор email phishing", "Email Phishing Detector", "Email-Phishing-Detektor"],
-  ["body[data-page='password-checker'] .future-tool-card:nth-child(2) h3", "Перевірка IP репутації", "IP Reputation Checker", "IP-Reputationsprüfung"],
-  ["body[data-page='password-checker'] .future-tool-card:nth-child(3) h3", "Dark Web Breach Checker", "Dark Web Breach Checker", "Dark-Web-Leak-Prüfung"],
-  ["body[data-page='password-checker'] .future-tool-card:nth-child(4) h3", "Browser Extension", "Browser Extension", "Browser-Erweiterung"],
-  ["body[data-page='password-checker'] .scan-history .panel-title", "// Демо історія сканувань", "// Scan History Demo", "// Scan-Verlauf Demo"],
-  ["body[data-page='password-checker'] .history-head span:nth-child(2)", "Дата", "Date", "Datum"],
-  ["body[data-page='password-checker'] .history-head span:nth-child(3)", "Ризик", "Risk level", "Risiko"],
-  ["body[data-page='password-checker'] .history-head span:nth-child(4)", "Статус", "Status", "Status"],
-  ["body[data-page='password-checker'] .history-row:nth-child(2) .risk-low", "НИЗЬКИЙ", "LOW", "NIEDRIG"],
-  ["body[data-page='password-checker'] .history-row:nth-child(2) .status-badge", "ЧИСТО", "CLEAN", "SAUBER"],
-  ["body[data-page='password-checker'] .history-row:nth-child(3) .risk-high", "ВИСОКИЙ", "HIGH", "HOCH"],
-  ["body[data-page='password-checker'] .history-row:nth-child(3) .status-badge", "ЗАБЛОКОВАНО", "BLOCKED", "BLOCKIERT"],
-  ["body[data-page='password-checker'] .history-row:nth-child(4) .risk-medium", "СЕРЕДНІЙ", "MEDIUM", "MITTEL"],
-  ["body[data-page='password-checker'] .history-row:nth-child(4) .status-badge", "ПЕРЕВІРКА", "REVIEW", "PRÜFUNG"]
 ];
 
 let activeLanguage = localStorage.getItem("cybersec-language") || "uk";
@@ -735,13 +744,13 @@ document.querySelectorAll("[data-lang]").forEach(button => {
   button.addEventListener("click", () => applyLanguage(button.dataset.lang));
 });
 
-const passwordInput = document.getElementById("passwordInput");
-const togglePassword = document.getElementById("togglePassword");
-const strengthBar = document.getElementById("strengthBar");
-const strengthLabel = document.getElementById("strengthLabel");
-const entropyValue = document.getElementById("entropyValue");
-const crackTime = document.getElementById("crackTime");
-const recommendationsList = document.getElementById("recommendations");
+let passwordInput = null;
+let togglePassword = null;
+let strengthBar = null;
+let strengthLabel = null;
+let entropyValue = null;
+let crackTime = null;
+let recommendationsList = null;
 const commonPasswords = [
   "password", "password1", "123456", "12345678", "qwerty", "admin",
   "letmein", "welcome", "iloveyou", "monkey", "dragon", "football",
@@ -900,11 +909,20 @@ function updatePasswordAnalysis() {
   renderRecommendations(recommendations);
 }
 
-if (passwordInput) {
-  passwordInput.addEventListener("input", updatePasswordAnalysis);
-}
+function initPasswordChecker() {
+  passwordInput = document.getElementById("passwordInput");
+  togglePassword = document.getElementById("togglePassword");
+  strengthBar = document.getElementById("strengthBar");
+  strengthLabel = document.getElementById("strengthLabel");
+  entropyValue = document.getElementById("entropyValue");
+  crackTime = document.getElementById("crackTime");
+  recommendationsList = document.getElementById("recommendations");
 
-if (togglePassword && passwordInput) {
+  if (!passwordInput || !togglePassword || !strengthBar || !strengthLabel || !entropyValue || !crackTime || !recommendationsList) {
+    return;
+  }
+
+  passwordInput.addEventListener("input", updatePasswordAnalysis);
   togglePassword.addEventListener("click", () => {
     const isHidden = passwordInput.type === "password";
     passwordInput.type = isHidden ? "text" : "password";
@@ -912,6 +930,7 @@ if (togglePassword && passwordInput) {
       ? translations[activeLanguage].hide
       : translations[activeLanguage].show;
   });
+  updatePasswordAnalysis();
 }
 
 hydrateStaticTranslations();
@@ -1621,6 +1640,7 @@ function refreshToolLanguage() {
 }
 
 window.__cybersecToolsReady = true;
+initPasswordChecker();
 document.addEventListener("DOMContentLoaded", () => {
   initHashGenerator();
 });
