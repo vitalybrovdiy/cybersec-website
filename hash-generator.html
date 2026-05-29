@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CYBERSEC local browser hash generator for text and files.">
   <title>CYBERSEC | Hash Generator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,23 +12,82 @@
 </head>
 <body data-page="hash-generator">
   <canvas id="matrix"></canvas>
-  <header class="site-header"><div class="container nav"><a href="index.html" class="logo" aria-label="CYBERSEC home"><div class="logo-icon">🔒</div><div><div class="logo-title">CYBERSEC</div><div class="logo-subtitle">STAY SECURE</div></div></a><nav class="menu" aria-label="Primary navigation"><a href="index.html" data-page-link="home">ГОЛОВНА</a><a href="about.html" data-page-link="about">ПРО НАС</a><a href="services.html" data-page-link="services">ПОСЛУГИ</a><a href="blog.html" data-page-link="blog">БЛОГ</a><a href="resources.html" data-page-link="resources">РЕСУРСИ</a><a href="password-checker.html" data-page-link="password-checker">PASSWORD CHECKER</a><a href="tools.html" data-page-link="tools">ІНСТРУМЕНТИ</a><a href="contacts.html" data-page-link="contacts">КОНТАКТИ</a></nav><div class="language-switcher" aria-label="Language switcher"><button type="button" data-lang="uk">UA</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="de">DE</button></div><a href="contacts.html" class="login" data-uk="🔒 ЗВ'ЯЗАТИСЬ" data-en="🔒 CONTACT" data-de="🔒 KONTAKT">🔒 ЗВ'ЯЗАТИСЬ</a><button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button></div></header>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="logo" aria-label="CYBERSEC home"><div class="logo-icon">🔒</div><div><div class="logo-title">CYBERSEC</div><div class="logo-subtitle">STAY SECURE</div></div></a>
+      <nav class="menu" aria-label="Primary navigation">
+        <a href="index.html" data-page-link="home" data-uk="ГОЛОВНА" data-en="HOME" data-de="START">ГОЛОВНА</a>
+        <a href="about.html" data-page-link="about" data-uk="ПРО НАС" data-en="ABOUT" data-de="ÜBER UNS">ПРО НАС</a>
+        <a href="services.html" data-page-link="services" data-uk="ПОСЛУГИ" data-en="SERVICES" data-de="SERVICES">ПОСЛУГИ</a>
+        <a href="blog.html" data-page-link="blog" data-uk="БЛОГ" data-en="BLOG" data-de="BLOG">БЛОГ</a>
+        <a href="resources.html" data-page-link="resources" data-uk="РЕСУРСИ" data-en="RESOURCES" data-de="RESSOURCEN">РЕСУРСИ</a>
+        <a href="password-checker.html" data-page-link="password-checker" data-uk="ПЕРЕВІРКА ПАРОЛЯ" data-en="PASSWORD CHECKER" data-de="PASSWORT-PRÜFER">ПЕРЕВІРКА ПАРОЛЯ</a>
+        <a href="tools.html" data-page-link="tools" data-uk="ІНСТРУМЕНТИ" data-en="TOOLS" data-de="TOOLS">ІНСТРУМЕНТИ</a>
+        <a href="contacts.html" data-page-link="contacts" data-uk="КОНТАКТИ" data-en="CONTACTS" data-de="KONTAKT">КОНТАКТИ</a>
+      </nav>
+      <div class="language-switcher" aria-label="Language switcher"><button type="button" data-lang="uk">UA</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="de">DE</button></div>
+      <a href="contacts.html" class="login" data-uk="🔒 ЗВ'ЯЗАТИСЬ" data-en="🔒 CONTACT" data-de="🔒 KONTAKT">🔒 ЗВ'ЯЗАТИСЬ</a>
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+    </div>
+  </header>
   <main class="container page tool-page">
-    <section class="page-hero reveal"><div class="eyebrow" data-uk="// ГЕНЕРАТОР ХЕШІВ" data-en="// HASH GENERATOR" data-de="// HASH-GENERATOR">// ГЕНЕРАТОР ХЕШІВ</div><h1 data-uk="Створи криптографічні хеші локально" data-en="Generate cryptographic hashes locally" data-de="Kryptografische Hashes lokal erzeugen">Створи криптографічні хеші локально</h1><p class="lead" data-uk="Текст і файли обробляються у браузері через Web Crypto API." data-en="Text and files are processed in the browser with the Web Crypto API." data-de="Text und Dateien werden im Browser mit der Web Crypto API verarbeitet.">Текст і файли обробляються у браузері через Web Crypto API.</p></section>
-    <section class="tool-layout">
+    <section class="page-hero reveal">
+      <div class="eyebrow" data-uk="// ГЕНЕРАТОР ХЕШІВ" data-en="// HASH GENERATOR" data-de="// HASH-GENERATOR">// ГЕНЕРАТОР ХЕШІВ</div>
+      <h1 data-uk="Створи криптографічні хеші локально" data-en="Generate cryptographic hashes locally" data-de="Kryptografische Hashes lokal erzeugen">Створи криптографічні хеші локально</h1>
+      <p class="lead" data-uk="Текст і файли обробляються у браузері через Web Crypto API." data-en="Text and files are processed in the browser with the Web Crypto API." data-de="Text und Dateien werden im Browser mit der Web Crypto API verarbeitet.">Текст і файли обробляються у браузері через Web Crypto API.</p>
+    </section>
+    <section class="tool-layout hash-tool">
       <article class="panel reveal">
-        <div class="panel-title" data-uk="// Вхідні дані" data-en="// Input" data-de="// Eingabe">// Вхідні дані</div>
-        <label class="tool-field"><span data-uk="Текст" data-en="Text" data-de="Text">Текст</span><textarea id="hashInput" class="tool-input" rows="8" data-uk-placeholder="Введіть текст для хешування" data-en-placeholder="Enter text to hash" data-de-placeholder="Text zum Hashen eingeben"></textarea></label>
-        <label class="tool-field"><span data-uk="Або файл" data-en="Or file" data-de="Oder Datei">Або файл</span><input id="hashFile" class="tool-input" type="file"></label>
-        <div id="hashFileName" class="tool-note"></div>
-        <div class="tool-actions"><button id="generateHash" class="btn btn-primary" type="button" data-uk="Згенерувати" data-en="Generate Hash" data-de="Hash erzeugen">Згенерувати</button><button id="clearHash" class="btn" type="button" data-uk="Очистити" data-en="Clear" data-de="Leeren">Очистити</button></div>
-        <div class="tool-badge muted" data-uk="MD5 потребує зовнішньої бібліотеки" data-en="MD5 requires external library" data-de="MD5 benötigt eine externe Bibliothek">MD5 потребує зовнішньої бібліотеки</div>
-        <div id="hashError" class="tool-error"></div>
+        <div class="panel-title" data-uk="// ВХІДНІ ДАНІ" data-en="// INPUT" data-de="// EINGABE">// ВХІДНІ ДАНІ</div>
+        <label class="tool-field">
+          <span data-uk="Текст" data-en="Text" data-de="Text">Текст</span>
+          <textarea id="hashTextInput" class="tool-input hash-input" rows="8" data-uk-placeholder="Введи текст для хешування" data-en-placeholder="Enter text to hash" data-de-placeholder="Text zum Hashen eingeben"></textarea>
+        </label>
+        <label class="tool-field">
+          <span data-uk="Файл" data-en="File" data-de="Datei">Файл</span>
+          <input id="hashFileInput" class="tool-input hash-input" type="file">
+        </label>
+        <div id="hashFileInfo" class="file-info" aria-live="polite"></div>
+        <div id="hashNotice" class="notice-message" aria-live="polite"></div>
+        <div id="hashError" class="error-message" aria-live="polite"></div>
+        <div class="tool-actions">
+          <button id="generateHashBtn" class="btn btn-primary" type="button" data-uk="ЗГЕНЕРУВАТИ" data-en="GENERATE" data-de="ERZEUGEN">ЗГЕНЕРУВАТИ</button>
+          <button id="clearHashBtn" class="btn" type="button" data-uk="ОЧИСТИТИ" data-en="CLEAR" data-de="LEEREN">ОЧИСТИТИ</button>
+        </div>
+        <p class="tool-note" data-uk="MD5 не додано, бо Web Crypto API його не підтримує." data-en="MD5 is not included because Web Crypto API does not support it." data-de="MD5 ist nicht enthalten, da Web Crypto API es nicht unterstützt.">MD5 не додано, бо Web Crypto API його не підтримує.</p>
       </article>
-      <aside class="panel result-panel reveal"><div class="panel-title" data-uk="// Результати" data-en="// Results" data-de="// Ergebnisse">// Результати</div><div id="hashResults" class="tool-output"></div></aside>
+      <aside class="panel result-panel reveal">
+        <div class="panel-title" data-uk="// РЕЗУЛЬТАТИ" data-en="// RESULTS" data-de="// ERGEBNISSE">// РЕЗУЛЬТАТИ</div>
+        <div class="hash-output-grid">
+          <article class="hash-result-card">
+            <h3 data-uk="SHA-1" data-en="SHA-1" data-de="SHA-1">SHA-1</h3>
+            <code id="sha1Output" class="hash-value">-</code>
+            <button class="copy-btn" type="button" data-copy-target="sha1Output" data-uk="КОПІЮВАТИ" data-en="COPY" data-de="KOPIEREN">КОПІЮВАТИ</button>
+            <span class="copy-feedback" data-uk="СКОПІЙОВАНО" data-en="COPIED" data-de="KOPIERT" aria-live="polite"></span>
+          </article>
+          <article class="hash-result-card">
+            <h3 data-uk="SHA-256" data-en="SHA-256" data-de="SHA-256">SHA-256</h3>
+            <code id="sha256Output" class="hash-value">-</code>
+            <button class="copy-btn" type="button" data-copy-target="sha256Output" data-uk="КОПІЮВАТИ" data-en="COPY" data-de="KOPIEREN">КОПІЮВАТИ</button>
+            <span class="copy-feedback" data-uk="СКОПІЙОВАНО" data-en="COPIED" data-de="KOPIERT" aria-live="polite"></span>
+          </article>
+          <article class="hash-result-card">
+            <h3 data-uk="SHA-384" data-en="SHA-384" data-de="SHA-384">SHA-384</h3>
+            <code id="sha384Output" class="hash-value">-</code>
+            <button class="copy-btn" type="button" data-copy-target="sha384Output" data-uk="КОПІЮВАТИ" data-en="COPY" data-de="KOPIEREN">КОПІЮВАТИ</button>
+            <span class="copy-feedback" data-uk="СКОПІЙОВАНО" data-en="COPIED" data-de="KOPIERT" aria-live="polite"></span>
+          </article>
+          <article class="hash-result-card">
+            <h3 data-uk="SHA-512" data-en="SHA-512" data-de="SHA-512">SHA-512</h3>
+            <code id="sha512Output" class="hash-value">-</code>
+            <button class="copy-btn" type="button" data-copy-target="sha512Output" data-uk="КОПІЮВАТИ" data-en="COPY" data-de="KOPIEREN">КОПІЮВАТИ</button>
+            <span class="copy-feedback" data-uk="СКОПІЙОВАНО" data-en="COPIED" data-de="KOPIERT" aria-live="polite"></span>
+          </article>
+        </div>
+      </aside>
     </section>
   </main>
-  <footer><div class="container footer-inner"><div data-uk="© 2026 CYBERSEC. Усі права захищені." data-en="© 2026 CYBERSEC. All rights reserved." data-de="© 2026 CYBERSEC. Alle Rechte vorbehalten.">© 2026 CYBERSEC. Усі права захищені.</div><div class="footer-links"><a href="resources.html" data-uk="???????? ????????????????" data-en="Privacy Policy" data-de="Datenschutzrichtlinie">???????? ????????????????</a><a href="resources.html" data-uk="????? ????????????" data-en="Terms of Use" data-de="Nutzungsbedingungen">????? ????????????</a></div><div class="socials"><a href="contacts.html">GitHub</a><a href="contacts.html">LinkedIn</a><a href="contacts.html">X</a></div></div></footer>
+  <footer><div class="container footer-inner"><div data-uk="© 2026 CYBERSEC. Усі права захищені." data-en="© 2026 CYBERSEC. All rights reserved." data-de="© 2026 CYBERSEC. Alle Rechte vorbehalten.">© 2026 CYBERSEC. Усі права захищені.</div><div class="footer-links"><a href="resources.html" data-uk="Політика конфіденційності" data-en="Privacy Policy" data-de="Datenschutzrichtlinie">Політика конфіденційності</a><a href="resources.html" data-uk="Умови використання" data-en="Terms of Use" data-de="Nutzungsbedingungen">Умови використання</a></div><div class="socials"><a href="contacts.html">GitHub</a><a href="contacts.html">LinkedIn</a><a href="contacts.html">X</a></div></div></footer>
   <script src="script.js"></script>
 </body>
 </html>

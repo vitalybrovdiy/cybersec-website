@@ -1098,6 +1098,73 @@ p {
   padding: 0 12px;
 }
 
+.hash-tool {
+  grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.2fr);
+}
+
+.hash-input[type="file"] {
+  cursor: pointer;
+}
+
+.hash-output-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.hash-result-card {
+  border: 1px solid rgba(57, 255, 74, 0.24);
+  background: rgba(57, 255, 74, 0.045);
+  padding: 16px;
+}
+
+.hash-result-card h3 {
+  margin: 0 0 10px;
+  color: var(--green);
+  font-size: 14px;
+}
+
+.hash-value {
+  display: block;
+  min-height: 56px;
+  margin-bottom: 12px;
+  color: var(--text);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.error-message,
+.notice-message,
+.file-info {
+  min-height: 24px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.error-message {
+  color: var(--red);
+}
+
+.notice-message,
+.file-info {
+  color: var(--green);
+}
+
+.copy-feedback {
+  display: inline-block;
+  margin-left: 10px;
+  color: var(--yellow);
+  font-size: 12px;
+  font-weight: 800;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.copy-feedback.is-visible {
+  opacity: 1;
+}
+
 .segmented {
   display: flex;
   flex-wrap: wrap;

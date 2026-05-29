@@ -926,9 +926,11 @@ if (progressBar) {
 
 const toolCopy = {
   uk: {
-    emptyInput: "Введіть текст або виберіть файл.",
-    copied: "Скопійовано",
-    copy: "Копіювати",
+    emptyInput: "Введи текст або вибери файл",
+    cryptoUnsupported: "Твій браузер не підтримує Web Crypto API",
+    filePriority: "Використовується вибраний файл",
+    copied: "СКОПІЙОВАНО",
+    copy: "КОПІЮВАТИ",
     fileSelected: "Файл вибрано:",
     decodeEmpty: "Вставте рядок для декодування.",
     invalidBase64: "Неможливо декодувати Base64.",
@@ -963,9 +965,11 @@ const toolCopy = {
     severityExplanation: "Оцінка базується на impact та exploitability згідно з FIRST CVSS v3.1."
   },
   en: {
-    emptyInput: "Enter text or select a file.",
-    copied: "Copied",
-    copy: "Copy",
+    emptyInput: "Enter text or choose a file",
+    cryptoUnsupported: "Your browser does not support Web Crypto API",
+    filePriority: "Selected file is being used",
+    copied: "COPIED",
+    copy: "COPY",
     fileSelected: "Selected file:",
     decodeEmpty: "Paste a string to decode.",
     invalidBase64: "Unable to decode Base64.",
@@ -1000,9 +1004,11 @@ const toolCopy = {
     severityExplanation: "The score is based on impact and exploitability using the FIRST CVSS v3.1 formula."
   },
   de: {
-    emptyInput: "Gib Text ein oder wähle eine Datei.",
-    copied: "Kopiert",
-    copy: "Kopieren",
+    emptyInput: "Gib Text ein oder wähle eine Datei",
+    cryptoUnsupported: "Dein Browser unterstützt Web Crypto API nicht",
+    filePriority: "Ausgewählte Datei wird verwendet",
+    copied: "KOPIERT",
+    copy: "KOPIEREN",
     fileSelected: "Ausgewählte Datei:",
     decodeEmpty: "Füge einen String zum Dekodieren ein.",
     invalidBase64: "Base64 konnte nicht dekodiert werden.",
@@ -1043,7 +1049,22 @@ function tTool(key) {
 }
 
 function copyText(text, button) {
-  navigator.clipboard?.writeText(text).then(() => {
+  const write = navigator.clipboard?.writeText
+    ? navigator.clipboard.writeText(text)
+    : new Promise(resolve => {
+      const fallback = document.createElement("textarea");
+      fallback.value = text;
+      fallback.setAttribute("readonly", "");
+      fallback.style.position = "fixed";
+      fallback.style.opacity = "0";
+      document.body.appendChild(fallback);
+      fallback.select();
+      document.execCommand("copy");
+      fallback.remove();
+      resolve();
+    });
+
+  write.then(() => {
     if (!button) return;
     const previous = button.textContent;
     button.textContent = tTool("copied");
@@ -1058,53 +1079,124 @@ function bytesToHex(buffer) {
 }
 
 function initHashGenerator() {
-  const input = document.getElementById("hashInput");
-  const fileInput = document.getElementById("hashFile");
-  const generate = document.getElementById("generateHash");
-  const clear = document.getElementById("clearHash");
-  const results = document.getElementById("hashResults");
+  const input = document.getElementById("hashTextInput");
+  const fileInput = document.getElementById("hashFileInput");
+  const generate = document.getElementById("generateHashBtn");
+  const clear = document.getElementById("clearHashBtn");
   const error = document.getElementById("hashError");
-  const fileName = document.getElementById("hashFileName");
+  const notice = document.getElementById("hashNotice");
+  const fileInfo = document.getElementById("hashFileInfo");
+  const outputs = {
+    "SHA-1": document.getElementById("sha1Output"),
+    "SHA-256": document.getElementById("sha256Output"),
+    "SHA-384": document.getElementById("sha384Output"),
+    "SHA-512": document.getElementById("sha512Output")
+  };
 
-  if (!input || !fileInput || !generate || !results) return;
+  if (!input || !fileInput || !generate || Object.values(outputs).some(output => !output)) return;
 
-  fileInput.addEventListener("change", () => {
-    fileName.textContent = fileInput.files[0] ? `${tTool("fileSelected")} ${fileInput.files[0].name}` : "";
-  });
+  const setMessage = (element, key) => {
+    if (!element) return;
+    element.dataset.uk = toolCopy.uk[key] || "";
+    element.dataset.en = toolCopy.en[key] || "";
+    element.dataset.de = toolCopy.de[key] || "";
+    element.textContent = tTool(key);
+  };
+
+  const clearMessage = element => {
+    if (element) {
+      element.textContent = "";
+    }
+  };
+
+  const resetOutputs = () => {
+    Object.values(outputs).forEach(output => {
+      output.textContent = "-";
+    });
+    document.querySelectorAll(".copy-feedback").forEach(feedback => {
+      feedback.classList.remove("is-visible");
+    });
+  };
+
+  const formatBytes = bytes => {
+    if (!bytes) return "0 B";
+    const units = ["B", "KB", "MB", "GB"];
+    const index = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+    return `${(bytes / (1024 ** index)).toFixed(index ? 2 : 0)} ${units[index]}`;
+  };
+
+  const updateFileInfo = () => {
+    const file = fileInput.files[0];
+    if (file) {
+      fileInfo.dataset.fileName = file.name;
+      fileInfo.dataset.fileSize = formatBytes(file.size);
+      fileInfo.textContent = `${tTool("fileSelected")} ${file.name} (${fileInfo.dataset.fileSize})`;
+    } else {
+      delete fileInfo.dataset.fileName;
+      delete fileInfo.dataset.fileSize;
+      fileInfo.textContent = "";
+    }
+  };
+
+  fileInput.addEventListener("change", updateFileInfo);
 
   generate.addEventListener("click", async () => {
-    error.textContent = "";
-    results.textContent = "";
-    const file = fileInput.files[0];
-    const data = file ? await file.arrayBuffer() : new TextEncoder().encode(input.value).buffer;
+    clearMessage(error);
+    clearMessage(notice);
+    document.querySelectorAll(".copy-feedback").forEach(feedback => feedback.classList.remove("is-visible"));
 
-    if (!file && !input.value.trim()) {
-      error.textContent = tTool("emptyInput");
+    if (!window.crypto || !window.crypto.subtle) {
+      setMessage(error, "cryptoUnsupported");
       return;
     }
 
-    for (const algorithm of ["SHA-1", "SHA-256", "SHA-512"]) {
-      const hash = bytesToHex(await crypto.subtle.digest(algorithm, data));
-      const row = document.createElement("div");
-      row.className = "hash-row";
-      row.innerHTML = `<strong>${algorithm}</strong><code>${hash}</code>`;
-      const button = document.createElement("button");
-      button.className = "copy-btn";
-      button.type = "button";
-      button.textContent = tTool("copy");
-      button.addEventListener("click", () => copyText(hash, button));
-      row.appendChild(button);
-      results.appendChild(row);
+    const file = fileInput.files[0];
+    const text = input.value;
+
+    if (!file && !text.trim()) {
+      setMessage(error, "emptyInput");
+      resetOutputs();
+      return;
+    }
+
+    const data = file ? await file.arrayBuffer() : new TextEncoder().encode(text).buffer;
+
+    if (file && text.trim()) {
+      setMessage(notice, "filePriority");
+    }
+
+    for (const algorithm of Object.keys(outputs)) {
+      outputs[algorithm].textContent = bytesToHex(await crypto.subtle.digest(algorithm, data));
     }
   });
 
   clear?.addEventListener("click", () => {
     input.value = "";
     fileInput.value = "";
-    fileName.textContent = "";
-    error.textContent = "";
-    results.textContent = "";
+    clearMessage(fileInfo);
+    clearMessage(error);
+    clearMessage(notice);
+    resetOutputs();
   });
+
+  document.querySelectorAll("[data-copy-target]").forEach(button => {
+    button.addEventListener("click", () => {
+      const target = document.getElementById(button.dataset.copyTarget);
+      const value = target?.textContent?.trim();
+      const feedback = button.parentElement?.querySelector(".copy-feedback");
+
+      if (!value || value === "-") return;
+
+      copyText(value, button);
+      if (feedback) {
+        feedback.textContent = tTool("copied");
+        feedback.classList.add("is-visible");
+        setTimeout(() => feedback.classList.remove("is-visible"), 1400);
+      }
+    });
+  });
+
+  updateFileInfo();
 }
 
 function decodeBase64Url(value) {
@@ -1511,6 +1603,10 @@ function renderCtf() {
 
 function refreshToolLanguage() {
   renderCves();
+  const hashFileInfo = document.getElementById("hashFileInfo");
+  if (hashFileInfo?.dataset.fileName) {
+    hashFileInfo.textContent = `${tTool("fileSelected")} ${hashFileInfo.dataset.fileName} (${hashFileInfo.dataset.fileSize})`;
+  }
   if (document.getElementById("cvssExplanation")) {
     const previous = {};
     document.querySelectorAll("[data-cvss]").forEach(select => previous[select.dataset.cvss] = select.value);
@@ -1525,7 +1621,9 @@ function refreshToolLanguage() {
 }
 
 window.__cybersecToolsReady = true;
-initHashGenerator();
+document.addEventListener("DOMContentLoaded", () => {
+  initHashGenerator();
+});
 initJwtDecoder();
 initSecurityQuiz();
 initCveFeed();
