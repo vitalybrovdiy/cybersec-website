@@ -1639,6 +1639,97 @@ function refreshToolLanguage() {
   });
 }
 
+function initBlogSearch() {
+  const search = document.getElementById("blogSearch");
+  const cards = [...document.querySelectorAll(".blog-card")];
+  const buttons = [...document.querySelectorAll("[data-blog-category]")];
+  const status = document.getElementById("blogSearchStatus");
+
+  if (!search || !cards.length) {
+    return;
+  }
+
+  let category = "All";
+  const statusCopy = {
+    uk: count => `Показано статей: ${count}`,
+    en: count => `Showing articles: ${count}`,
+    de: count => `Angezeigte Artikel: ${count}`
+  };
+
+  function filterBlog() {
+    const query = search.value.trim().toLowerCase();
+    let visible = 0;
+
+    cards.forEach(card => {
+      const text = `${card.dataset.title || ""} ${card.dataset.category || ""} ${card.dataset.keywords || ""}`.toLowerCase();
+      const matchesQuery = !query || text.includes(query);
+      const matchesCategory = category === "All" || card.dataset.category === category;
+      const show = matchesQuery && matchesCategory;
+      card.hidden = !show;
+      if (show) visible++;
+    });
+
+    if (status) {
+      status.textContent = (statusCopy[activeLanguage] || statusCopy.uk)(visible);
+    }
+  }
+
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      category = button.dataset.blogCategory;
+      buttons.forEach(item => item.classList.toggle("active", item === button));
+      filterBlog();
+    });
+  });
+
+  if (buttons[0]) {
+    buttons[0].classList.add("active");
+  }
+
+  search.addEventListener("input", filterBlog);
+  filterBlog();
+}
+
+function initReadingProgress() {
+  const bar = document.getElementById("readingProgressBar");
+
+  if (!bar) {
+    return;
+  }
+
+  function updateProgress() {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable <= 0 ? 0 : (window.scrollY / scrollable) * 100;
+    bar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+  }
+
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress);
+  updateProgress();
+}
+
+function initArticleSharing() {
+  const links = document.querySelectorAll("[data-share]");
+
+  if (!links.length) {
+    return;
+  }
+
+  const pageUrl = encodeURIComponent(window.location.href);
+  const pageTitle = encodeURIComponent(document.title);
+  const shareUrls = {
+    twitter: `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`,
+    telegram: `https://t.me/share/url?url=${pageUrl}&text=${pageTitle}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}`
+  };
+
+  links.forEach(link => {
+    link.href = shareUrls[link.dataset.share] || window.location.href;
+    link.target = "_blank";
+    link.rel = "noopener";
+  });
+}
+
 window.__cybersecToolsReady = true;
 initPasswordChecker();
 document.addEventListener("DOMContentLoaded", () => {
@@ -1649,3 +1740,6 @@ initSecurityQuiz();
 initCveFeed();
 initCvssCalculator();
 initCtfChallenges();
+initBlogSearch();
+initReadingProgress();
+initArticleSharing();
