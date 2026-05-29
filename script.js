@@ -1739,6 +1739,10 @@ function updateImageAltText() {
       image.alt = nextAlt;
     }
   });
+
+  document.querySelectorAll(".blog-image-fallback[data-uk][data-en][data-de]").forEach(fallback => {
+    fallback.textContent = fallback.dataset[activeLanguage] || fallback.dataset.uk;
+  });
 }
 
 function initBlogImages() {
